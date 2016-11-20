@@ -25,19 +25,18 @@ public:
      
 //Modificadores
 
-    /** @brief Evalua una expressio.
-     \pre <em>e tenim una expressió a la entrada</em>
-     \post Afegim la expressió a una llista, separada per strings
+    /** @brief Converteix un string en una expressió.
+     \pre <em>Tenim una comanda a la entrada</em>
+     \post L'expressió està formada a partir dels strings corresponents
      */
-     
-     void afegir_expressio_llista(string s);
+     void llegir_expressio(string s);
     
 //Consultora
      /** @brief Evalua una expressio.
-      \pre <em>Disposem d'una llista ben desenvolupada</em>
-      \post S'ha evaluat la expressió que teniem a la llista
+      \pre <em>Disposem d'una expressió</em>
+      \post Retorna el resultat de l'expressió
       */
-      string evaluar_expressio(list<string> llista_expresio);
+      void evaluar_expressio();
     
 private:
     list<string> llista_expresio;
