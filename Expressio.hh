@@ -32,19 +32,13 @@ public:
      
      void afegir_expressio_llista(string s);
     
-     /** @brief Evalua una expressio.
-     \pre <em>e tenim una llista de strings amb dades guardades</em>
-     \post Tenim una nova llista, amb les subexpresions de la llista evaluada.
-     */
-     
-     
-     
-////Consultora
+//Consultora
      /** @brief Evalua una expressio.
       \pre <em>Disposem d'una llista ben desenvolupada</em>
       \post S'ha evaluat la expressió que teniem a la llista
       */
       string evaluar_expressio(list<string> llista_expresio);
+    
 private:
     list<string> llista_expresio;
 };
