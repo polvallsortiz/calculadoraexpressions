@@ -21,7 +21,7 @@ public:
       \pre <em>cert</em>
       \post El resultat és una llista buida de strings 
       */  
-     expressio();
+     Expressio();
      
 //Modificadores
 

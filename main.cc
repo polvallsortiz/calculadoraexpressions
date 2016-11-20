@@ -1,9 +1,11 @@
 #include "Dades.hh"
 #include "Operacions.hh"
+#include "Expressio.hh"
 #ifndef NO_DIAGRAM 
 #include <iostream>
 #include <sstream>
 #include <string>
+using namespace std;
 #endif
 
 /** @brief Programa principal per a la pràctica <em><b>Calculadora d'expressions aritmètiques</b></em>.
@@ -13,12 +15,13 @@ int main ()
 {
     Dades data;
     Operacions op;
-    string expressio,definitiva;
-    getline(cin,expressio);
-    while(expressio != "****" ) {
-        definitiva = exp_completa(expressio);
-        
-        getline(cin,expressio);
+    string comanda;
+    getline(cin,comanda);
+    while(comanda != "****" ) {
+        Expressio actual;
+        actual.llegir_expressio(comanda);
+        actual.evaluar_expressio();
+        getline(cin,comanda);
     }
 }  
 
