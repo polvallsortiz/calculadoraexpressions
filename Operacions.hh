@@ -2,10 +2,11 @@
     @brief Especificació de la classe Operacions
 */
 
-#ifndef _OPERACIONS_HH_
 #define _OPERACIONS_HH_
 
 #include "Dades.hh"
+#ifndef _OPERACIONS_HH_
+
 #include <map>
 #include <list>
 #include <string>
