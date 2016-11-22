@@ -2,11 +2,11 @@
     @brief Especificació de la classe Operacions
 */
 
+#ifndef _OPERACIONS_HH_
 #define _OPERACIONS_HH_
 
 #include "Dades.hh"
-#ifndef _OPERACIONS_HH_
-
+#ifndef NO_DIAGRAM
 #include <map>
 #include <list>
 #include <string>
@@ -15,8 +15,9 @@
 
 
 /** @class Operacions
-    @brief Representa el conjunt d'operacions de la calculadora. 
+    @brief Representa el conjunt d'operacions de la calculadora.
 */
+
 class Operacions
 {
 public:
@@ -29,27 +30,18 @@ public:
       \post El resultat és un conjunt d'operacions predefinides
       */  
      Operacions();
-     
-//Modificadores
-     
-     /** @brief Completa l'expressio.
-     \pre <em>expr es la primera línia de l'expressio</em>
-     \post La expressio esta completa
+
+
+    //Modificadores
+
+    /** @brief Afegeix al sistema una operació.
+     \pre <em>cert</em>
+     \post S'ha afegit l'operació definida
      */
-    string exp_completa(string expr);
-    
-    /** @brief Completa l'expressio.
-     \pre <em>expr es la primera línia de l'expressio</em>
-     \post La expressio esta completa
-     */
-    string fill_complet(string au);
-    
-   
-    /** @brief Evalua una expressio.
-     \pre <em>expr es una expressio ben parentitzada</em>
-     \post La expressio ha estat executada
-     */
-    void evaluador_exp(string expr);
+    void afegir_operacio(string s, string index);
+
+
+//Consultores
     
     /** @brief Operacio predefinida de suma.
      \pre <em>Els dos valors x i y son dos enters</em>
@@ -71,7 +63,6 @@ public:
      */
      void afegidor(int x, list<int> y); 
      
-//Consultores 
 
     /** @brief Retorna el primer element de la llista.
      \pre <em>x no es buida</em>
@@ -122,7 +113,7 @@ public:
      bool comparacio_AND(bool x, bool y);
      
      
-    /** @brief Evalua el if.               //CAL MILLORAR
+    /** @brief Evalua la funció IF.
      \pre <em>ref1,ref2,ref3 son etiquetes dels valors x,y,z</em>
      \post Retorna per referencia y si x == 1, z si x == 0. A paraula retorna
         "enter/boolea" si es tracta d'un enter o un boolea, o "llista"si es

@@ -3,11 +3,12 @@
 
 #include "Operacions.hh"
 #include "Dades.hh"
+#ifndef NO_DIAGRAM
 #include <string>
 #include <list>
 #endif
 
-/** @class Expressió
+/** @class Expressio
     @brief Conté les operacions de lectura i de avaluació de l'expressió. 
 */
 
