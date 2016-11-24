@@ -103,24 +103,21 @@ public:
      \pre <em>x i y son booleans</em>
      \post La expressio ha estat executada
      */
-    bool comparacio_OR(bool x, bool y);
+    int comparacio_OR(int x, int y);
     
     
      /** @brief Evalua la condició lógica AND.
      \pre <em>x i y son booleans</em>
      \post La expressio ha estat executada
      */
-     bool comparacio_AND(bool x, bool y);
+     int comparacio_AND(int x, int y);
      
      
     /** @brief Evalua la funció IF.
-     \pre <em>ref1,ref2,ref3 son etiquetes dels valors x,y,z</em>
-     \post Retorna per referencia y si x == 1, z si x == 0. A paraula retorna
-        "enter/boolea" si es tracta d'un enter o un boolea, o "llista"si es
-        tracta de una llista.
+     \pre <em>x es un boolea</em>
+     \post S'ha evaluat l'element y o z(depenent de x), que pot ser llista, enter o boolea
      */
-     void if_y_z(string ref1, string ref2, string ref3, int &enter, list<int> &llistaenter, string &paraula);
-     
+     void if_y_z_bool(int x);
 private:
     map<string,string> operacions_definides;
     list<string> operacions_predefinides;
