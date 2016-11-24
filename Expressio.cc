@@ -22,3 +22,7 @@ void Expressio::llegir_expressio(string s) {
 
     }
 }
+
+void Expressio::evaluar_expressio() {
+    
+}
