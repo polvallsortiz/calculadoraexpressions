@@ -4,6 +4,24 @@
 
 #include "Operacions.hh"
 
+void Operacions::Operacions(
+    operacions_predefinides.push_back("+");
+    operacions_predefinides.push_back("-");
+    operacions_predefinides.push_back("cons");
+    operacions_predefinides.push_back("head");
+    operacions_predefinides.push_back("tail");
+    operacions_predefinides.push_back("=");
+    operacions_predefinides.push_back("<");
+    operacions_predefinides.push_back("not");
+    operacions_predefinides.push_back("and");
+    operacions_predefinides.push_back("or");
+    operacions_predefinides.push_back("if");
+}
+
+void Operacions::afegir_operacio(string index, string s) {
+    operacions_definides.emplace(index,s);
+}
+
 int Operacions::suma(int &x, int &y) {
     return x + y;
 }

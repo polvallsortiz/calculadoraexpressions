@@ -1,1 +1,1 @@
-//hola
+#include "Dades.hh"

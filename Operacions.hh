@@ -38,7 +38,7 @@ public:
      \pre <em>cert</em>
      \post S'ha afegit l'operació definida
      */
-    void afegir_operacio(string s, string index);
+    void afegir_operacio(string index, string s);
 
 
 //Consultores
