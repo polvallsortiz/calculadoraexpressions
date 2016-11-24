@@ -4,8 +4,11 @@
 #include "Operacions.hh"
 #include "Dades.hh"
 #ifndef NO_DIAGRAM
+#include <sstream>
+#include <sstream>
 #include <string>
 #include <list>
+using namespace std;
 #endif
 
 /** @class Expressio
