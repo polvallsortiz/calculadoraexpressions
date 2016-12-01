@@ -26,23 +26,27 @@ public:
       \post El resultat és una llista buida de strings 
       */  
      Expressio();
-     
+
+private:
 //Modificadores
 
     /** @brief Converteix un string en una expressió.
      \pre <em>Tenim una comanda a la entrada</em>
      \post L'expressió està formada a partir dels strings corresponents
      */
-     void llegir_expressio(string s);
+     list<string> llegir_expressio(string s);
     
 //Consultora
      /** @brief Evalua una expressio.
       \pre <em>Disposem d'una expressió</em>
       \post Retorna el resultat de l'expressió
       */
-      void evaluar_expressio();
+      void evaluar();
     
-private:
-    list<string> llista_expresio;
+    /** @brief Evalua una expressio.
+    \pre <em>Disposem d'una expressió</em>
+    \post Retorna el resultat de l'expressió
+    */
+    list<int> evaluar_expressio(string op, string left, string right);
 };
 #endif
