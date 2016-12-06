@@ -4,10 +4,11 @@
 
 #include "Operacions.hh"
 
-vector<string> Expressio::llegir_expressio(string s) {
-    vector<string> llista_expressio;
-    s.erase(0, 1);
-    s.erase(s.size()-1);
+void llegir_expressio(string s) {
+    if(s[0] == '(') {
+        s.erase(0, 1);
+        s.erase(s.size()-1);
+    }
     istringstream iss(s);
     string frag = "";
     string tmp = "";
@@ -21,30 +22,37 @@ vector<string> Expressio::llegir_expressio(string s) {
             frag = "";
         }
     }
-    return llista_expressio;
 }
 
 
-void Expressio::evaluar(string expr){
-    vector<string> eval = llista_expressio(expr);
-    string op = eval[0];
-    string l, r;
-    l = eval[1];
-    r = eval[2];
-    evaluar_expressio(op, l, r);
+void Expressio::evaluar(){
+    list<string>::iterator it = llista_expressio.begin();
+    string op = *it;
+    if(op == "+" or op == "cons" or op == "=" or op == "<" or op == "and"  or op == "or") {
+        string left,right;
+        ++it;
+        left = *it;
+        ++it;
+        right = *it;
+        if(it != llista_expressio.end()) cout << "indefinit" << endl;
+        else evaluar_dob(op,left,right);
+    }
+    if(op == "-" or op == "head" or op == "tail" or op == "not") {
+        string uni;
+        ++it;
+        uni = *it;
+        if(it != llista_expressio.end()) cout << "indefinit" << endl;
+        else evaluar_uni(op,uni);
+    }
 }
-vector<int> evaluar_expressio(string op, string left, string right) {
 
+
+
+list<int> evaluar_dob(string op, string l, string r) {
     switch(op){
         case "+":
-            int l, r;
-            vector<string> vl,vr;
-            vl = llegir_expressio(left);
-            vr = llegir_expressio(right);
-            l = evaluar_expressio(vl[0],vl[1])[0];
-            r = evaluar_expressio()[]
-            break;
-        case default:
+            list <string> sub_expressio;
+            llegir_expressio(l);
 
             break;
     }

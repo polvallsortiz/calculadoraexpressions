@@ -27,7 +27,6 @@ public:
       */  
      Expressio();
 
-private:
 //Modificadores
 
     /** @brief Converteix un string en una expressió.
@@ -48,5 +47,8 @@ private:
     \post Retorna el resultat de l'expressió
     */
     list<int> evaluar_expressio(string op, string left, string right);
+
+private:
+    list<string> llista_expressio;
 };
 #endif

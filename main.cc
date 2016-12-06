@@ -20,7 +20,12 @@ int main ()
     while(comanda != "****" ) {
         Expressio actual;
         actual.llegir_expressio(comanda);
-        actual.evaluar_expressio();
+        if(actual.first_expressio() == "+") {
+            if(actual.length_expressio() == 3) {
+
+            }
+            else cout << "indefinit" << endl;
+        }
         getline(cin,comanda);
     }
 }
