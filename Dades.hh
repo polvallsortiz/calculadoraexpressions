@@ -24,8 +24,7 @@ public:
 
       S'executa automaticament al declarar un conjunt d'operacions.
       \pre <em>cert</em>
-      \post El resultat son dos maps(un de enters, i un altre de llistes) 
-            sense cap valor, buit.
+      \post Conjunt creat correctament al sistema.
       */  
      Dades();
      
