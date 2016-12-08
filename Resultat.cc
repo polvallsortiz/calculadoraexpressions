@@ -7,6 +7,10 @@
 
 #include "Resultat.hh"
 
+Resultat::Resultat() {
+    descripcio = "indefinit";
+}
+
 void Resultat::afegir_enter_bool(int enter_bool) {
     enterbool = enter_bool;
 }
