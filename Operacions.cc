@@ -1,4 +1,4 @@
-/** @file pro2_s8.cc
+/** @file Operacions.cc
     @brief Implementacó de les operacions definides de <em>Calculadora d'expressions</em>.
 */
 

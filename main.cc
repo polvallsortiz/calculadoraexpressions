@@ -1,5 +1,3 @@
-#include "Dades.hh"
-#include "Operacions.hh"
 #include "Expressio.hh"
 #ifndef NO_DIAGRAM 
 #include <iostream>
@@ -13,19 +11,11 @@ using namespace std;
 
 int main ()
 {
-    Dades data;
-    Operacions op;
     string comanda;
     getline(cin,comanda);
     while(comanda != "****" ) {
-        Expressio actual;
-        actual.llegir_expressio(comanda);
-        if(actual.first_expressio() == "+") {
-            if(actual.length_expressio() == 3) {
-
-            }
-            else cout << "indefinit" << endl;
-        }
+        Expressio expr;
+        expr.inicialitzar(comanda);
         getline(cin,comanda);
     }
 }

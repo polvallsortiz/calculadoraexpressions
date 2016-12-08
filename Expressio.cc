@@ -4,32 +4,6 @@
 
 #include "Expressio.hh"
 
-void inicialitzar(string comanda) {
-    list<string> llista;
-    llegir_expressio(comanda,llista);
-    Resultat res = evaluar(llista);
-    if(res.desc == "bool") {
-        if(res.resultat == 1) {
-            cout << res.resultat << " " << "TRUE" << endl;
-        }
-        else {
-            cout << res.resultat << " " << "FALSE" << endl;
-        }
-    }
-    if(res.desc == "enter") cout << res.resultat << " " << "ENTER" << endl;
-    if(res.desc == "llista") {
-        list<int>::iterator it = res.llista.begin();
-        while(it != res.llista.end()) {
-            cout << *it << " ";
-            ++it;
-        }
-        cout << endl << "LLISTA" << endl;
-    }
-    if(res.desc == "indefinit") {
-        cout << "******** INDEFINIT ********" << endl;
-    }
-}
-
 
 void llegir_expressio(string s, list<string>& llista_expressio){
     if(s[0] == '(') {
@@ -55,10 +29,10 @@ void llegir_expressio(string s, list<string>& llista_expressio){
 Resultat evaluar(list<string> llista_expressio) {
     list<string>::iterator it = llista_expressio.begin();
     string op = *it;
+    Resultat tres;
     if(op == "+") {
         ++it;
         string l = *it;
-        cerr << l << endl;
         list<string> llistal;
         llegir_expressio(l,llistal);
         Resultat lres = evaluar(llistal);
@@ -67,10 +41,8 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistar;
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
-        Resultat tres;
-        tres.resultat = lres.resultat + rres.resultat;
-        tres.desc = "enter";
-        return tres;
+        tres.afegir_enter_bool(lres.consultar_enter()+rres.consultar_enter());
+        tres.afegir_descripcio("enter");
     }
     if(op == "-") {
         ++it;
@@ -78,9 +50,8 @@ Resultat evaluar(list<string> llista_expressio) {
         list <string> llistal;
         llegir_expressio(l,llistal);
         Resultat lres = evaluar(llistal);
-        lres.resultat = -lres.resultat;
-        lres.desc = "enter";
-        return lres;
+        tres.afegir_enter_bool(-lres.consultar_enter());
+        tres.afegir_descripcio("enter");
     }
     if(op == "cons") {
         ++it;
@@ -93,13 +64,9 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistar;
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
-        list<int> treslist;
-        treslist = rres.llista;
-        treslist.push_back(lres.resultat);
-        Resultat tres;
-        tres.llista = treslist;
-        tres.desc = "llista";
-        return tres;
+        tres.afegir_llista(rres.consultar_llista());
+        tres.afegir_enter_llista(lres.consultar_enter());
+        tres.afegir_descripcio("llista");
     }
     if(op == "head") {
         ++it;
@@ -107,9 +74,8 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistal;
         llegir_expressio(l,llistal);
         Resultat lres = evaluar(llistal);
-        lres.resultat = lres.llista.front();
-        lres.desc = "enter";
-        return lres;
+        tres.afegir_enter_bool(lres.consultar_top());
+        tres.afegir_descripcio("enter");
     }
     if(op == "tail") {
         ++it;
@@ -117,9 +83,9 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistal;
         llegir_expressio(l,llistal);
         Resultat lres = evaluar(llistal);
-        lres.llista.pop_front();
-        lres.desc = "llista";
-        return lres;
+        tres.afegir_llista(lres.consultar_llista());
+        tres.esborrar_enter_llista();
+        tres.afegir_descripcio("llista");
     }
     if(op == "=") {
         ++it;
@@ -132,47 +98,43 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistar;
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
-        Resultat tres;
-        if(lres.desc == "enter" and rres.desc == "enter") {
-            if(lres.resultat == rres.resultat) {
-                tres.resultat = 1;
-                tres.desc = "bool";
+        if(lres.consultar_descripcio() == "enter" and rres.consultar_descripcio() == "enter") {
+            if(lres.consultar_enter() == rres.consultar_enter()) {
+                tres.afegir_enter_bool(1);
+                tres.afegir_descripcio("bool");
             }
             else {
-                tres.resultat = 0;
-                tres.desc = "bool";
+                tres.afegir_enter_bool(0);
+                tres.afegir_descripcio("bool");
             }
-
         }
         else {
-            if(lres.desc == "llista" and rres.desc == "llista") {
-                if(lres.llista == rres.llista) {
-                    tres.resultat = 1;
-                    tres.desc = "bool";
+            if(lres.consultar_descripcio() == "llista" and rres.consultar_descripcio() == "llista") {
+                if(lres.consultar_llista() == rres.consultar_llista()) {
+                    tres.afegir_enter_bool(1);
+                    tres.afegir_descripcio("bool");
                 }
                 else {
-                    tres.resultat = 0;
-                    tres.desc = "bool";
+                    tres.afegir_enter_bool(0);
+                    tres.afegir_descripcio("bool");
                 }
-
             }
             else {
-                if(lres.desc == "bool" and rres.desc == "bool") {
-                    if(lres.resultat == rres.resultat) {
-                        tres.resultat = 1;
-                        tres.desc = "bool";
+                if(lres.consultar_descripcio() == "bool" and rres.consultar_descripcio() == "bool") {
+                    if(lres.consultar_enter() == rres.consultar_enter()) {
+                        tres.afegir_enter_bool(1);
+                        tres.afegir_descripcio("bool");
                     }
                     else {
-                        tres.resultat = 0;
-                        tres.desc = "bool";
+                        tres.afegir_enter_bool(0);
+                        tres.afegir_descripcio("bool");
                     }
                 }
                 else {
-                    tres.desc = "indefinit";
+                    tres.afegir_descripcio("indefinit");
                 }
             }
         }
-        return tres;
     }
     if(op == "<") {
         ++it;
@@ -185,22 +147,20 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistar;
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
-        Resultat tres;
-        if(lres.desc == "enter" and rres.desc == "enter") {
-            if(lres.resultat < rres.resultat) {
-                tres.resultat = 1;
-                tres.desc = "bool";
+        if(lres.consultar_descripcio() == "enter" and rres.consultar_descripcio() == "enter") {
+            if(lres.consultar_enter() < rres.consultar_enter()) {
+                tres.afegir_enter_bool(1);
+                tres.afegir_descripcio("bool");
             }
             else {
-                tres.resultat = 0;
-                tres.desc = "bool";
+                tres.afegir_enter_bool(0);
+                tres.afegir_descripcio("bool");
             }
 
         }
         else {
-            tres.desc = "indefinit";
+            tres.afegir_descripcio("indefinit");
         }
-        return tres;
     }
     if(op == "not") {
         ++it;
@@ -208,14 +168,12 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistal;
         llegir_expressio(l,llistal);
         Resultat lres = evaluar(llistal);
-        Resultat tres;
-        if(lres.desc == "bool") {
-            if(lres.resultat == 0) tres.resultat = 1;
-            else tres.resultat = 0;
-            tres.desc = "bool";
+        if(lres.consultar_descripcio() == "bool") {
+            if(lres.consultar_enter() == 0) tres.afegir_enter_bool(1);
+            else tres.afegir_enter_bool(0);
+            tres.afegir_descripcio("bool");
         }
-        else tres.desc = "indefinit";
-        return tres;
+        else tres.afegir_descripcio("indefinit");
     }
     if(op == "and") {
         ++it;
@@ -228,19 +186,12 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistar;
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
-        Resultat tres;
-        if(lres.desc == "bool" and rres.desc == "bool") {
-            if(lres.resultat == 1 and rres.resultat == 1) {
-                tres.resultat = 1;
-                tres.desc = "bool";
-            }
-            else {
-                tres.resultat = 0;
-                tres.desc = "bool";
-            }
+        if(lres.consultar_descripcio() == "bool" and rres.consultar_descripcio() == "bool") {
+            if(lres.consultar_enter() == 1 and rres.consultar_enter() == 1) tres.afegir_enter_bool(1);
+            else tres.afegir_enter_bool(0);
+            tres.afegir_descripcio("bool");
         }
-        else tres.desc = "indefinit";
-        return tres;
+        else tres.afegir_descripcio("indefinit");
     }
     if(op == "or") {
         ++it;
@@ -253,19 +204,12 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistar;
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
-        Resultat tres;
-        if(lres.desc == "bool" and rres.desc == "bool") {
-            if(lres.resultat == 1 or rres.resultat == 1) {
-                tres.resultat = 1;
-                tres.desc = "bool";
-            }
-            else {
-                tres.resultat = 0;
-                tres.desc = "bool";
-            }
+        if(lres.consultar_descripcio() == "bool" and rres.consultar_descripcio() == "bool") {
+            if(lres.consultar_enter() == 1 or rres.consultar_enter() == 1) tres.afegir_enter_bool(1);
+            else tres.afegir_enter_bool(0);
+            tres.afegir_descripcio("bool");
         }
-        else tres.desc = "indefinit";
-        return tres;
+        else tres.afegir_descripcio("indefinit");
     }
     if(op == "if") {
         ++it;
@@ -283,58 +227,84 @@ Resultat evaluar(list<string> llista_expressio) {
         list<string> llistaz;
         llegir_expressio(z,llistaz);
         Resultat zres = evaluar(llistaz);
-        Resultat tres;
-        if(xres.desc == "bool") {
-            if(xres.resultat == 0) {
-                if(yres.desc == "llista") {
-                    tres.desc = "llista";
-                    tres.llista = yres.llista;
+        if(xres.consultar_descripcio() == "bool") {
+            if(xres.consultar_enter() == 0) {
+                if(yres.consultar_descripcio() == "llista") {
+                    tres.afegir_descripcio("llista");
+                    tres.afegir_llista(yres.consultar_llista());
                 }
-                if(yres.desc == "enter") {
-                    tres.desc = "enter";
-                    tres.resultat = yres.resultat;
+                if(yres.consultar_descripcio() == "enter") {
+                    tres.afegir_descripcio("enter");
+                    tres.afegir_enter_bool(yres.consultar_enter());
                 }
-                if(yres.desc == "bool") {
-                    tres.desc = "bool";
-                    tres.resultat = yres.resultat;
+                if(yres.consultar_descripcio() == "bool") {
+                    tres.afegir_descripcio("bool");
+                    tres.afegir_enter_bool(yres.consultar_enter());
                 }
             }
             else {
-                if(zres.desc == "llista") {
-                    tres.desc = "llista";
-                    tres.llista = zres.llista;
+                if(zres.consultar_descripcio() == "llista") {
+                    tres.afegir_descripcio("llista");
+                    tres.afegir_llista(zres.consultar_llista());
                 }
-                if(zres.desc == "enter") {
-                    tres.desc = "enter";
-                    tres.resultat = zres.resultat;
+                if(zres.consultar_descripcio() == "enter") {
+                    tres.afegir_descripcio("enter");
+                    tres.afegir_enter_bool(zres.consultar_enter());
                 }
-                if(zres.desc == "bool") {
-                    tres.desc = "bool";
-                    tres.resultat = zres.resultat;
+                if(zres.consultar_descripcio() == "bool") {
+                    tres.afegir_descripcio("bool");
+                    tres.afegir_enter_bool(zres.consultar_enter());
                 }
             }
         }
-        else tres.desc = "indefinit";
-        return tres;
+        else tres.afegir_descripcio("indefinit");
     }
     else {
         if(llista_expressio.size() == 1) { //ENTER SOL
-            Resultat tres;
             istringstream enter(*it);
-            enter >> tres.resultat;
-            tres.desc = "enter";
-            return tres;
+            int entertemp;
+            enter >> entertemp;
+            tres.afegir_enter_bool(entertemp);
+            //BOOL OR ENTER HOW WE KNOW IT ISSUE#5 GitHub
+            tres.afegir_descripcio("enter");
         }
         else { //LLISTA
-            Resultat tres;
             while(it != llista_expressio.end()) {
                 istringstream enter(*it);
                 int temp;
                 enter >> temp;
-                tres.llista.push_back(temp);
+                tres.afegir_enter_llista(temp);
                 ++it;
             }
-            return tres;
         }
+    }
+    return tres;
+}
+
+void Expressio::inicialitzar(string comanda) {
+    list<string> llista;
+    llegir_expressio(comanda,llista);
+    Resultat res = evaluar(llista);
+    if(res.consultar_descripcio() == "bool") {
+        if(res.consultar_enter() == 1) {
+            cout << res.consultar_enter() << " " << "TRUE" << endl;
+        }
+        else {
+            cout << res.consultar_enter() << " " << "FALSE" << endl;
+        }
+    }
+    if(res.consultar_descripcio() == "enter") cout << res.consultar_enter() << " " << "ENTER" << endl;
+    if(res.consultar_descripcio() == "llista") {
+        list<int> listtemp;
+        listtemp = res.consultar_llista();
+        list<int>::iterator it = listtemp.begin();
+        while(it != listtemp.end()) {
+            cout << *it << " ";
+            ++it;
+        }
+        cout << endl << "LLISTA" << endl;
+    }
+    if(res.consultar_descripcio() == "indefinit") {
+        cout << "******** INDEFINIT ********" << endl;
     }
 }

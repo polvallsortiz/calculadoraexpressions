@@ -13,6 +13,7 @@
 #include <list>
 #include <string>
 #endif
+using namespace std;
 
 /** @class Resultat
     @brief Classe per a l'expressió correcta del resultat
@@ -34,13 +35,25 @@ public:
          \pre <em>cert</em>
          \post Modificat.
          */
-    void afegir_enter_bool(int enter_bool);
+    void afegir_enter_bool(int enterbool);
+
+    /** @brief Modifica el valor enter/booleà del parametre implícit.
+        \pre <em>cert</em>
+        \post Modificat.
+        */
+    void afegir_llista(list<int> llista_ints);
 
     /** @brief Modifica el valor llista del parametre implícit.
          \pre <em>cert</em>
          \post Modificat.
          */
     void afegir_enter_llista(int enter_llista);
+
+    /** @brief Modifica la descripció del parametre implícit.
+         \pre <em>cert</em>
+         \post Modificat.
+         */
+    void afegir_descripcio(string desc);
 
     /** @brief Modifica el valor llista del parametre implícit.
          \pre <em>cert</em>
@@ -55,6 +68,24 @@ public:
          \post Retorna el valor.
          */
     int consultar_top();
+
+    /** @brief Retorna el valor de la llista.
+         \pre <em>cert</em>
+         \post Retorna el valor.
+         */
+    list<int> consultar_llista();
+
+    /** @brief Retorna el valor del enter.
+         \pre <em>cert</em>
+         \post Retorna el valor.
+         */
+    int consultar_enter();
+
+    /** @brief Retorna el valor de la descripcio.
+         \pre <em>cert</em>
+         \post Retorna el valor.
+         */
+    string consultar_descripcio();
 
 
 

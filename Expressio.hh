@@ -5,14 +5,16 @@
 #ifndef _EXPRESSIO_HH_
 #define _EXPRESSIO_HH_
 
-#include "Dades.hh"
-#include "Resultat.hh"
 #ifndef NO_DIAGRAM
+//#include "Dades.hh"
+#include "Resultat.hh"
 #include <sstream>
 #include <string>
 #include <list>
-using namespace std;
+#include <iostream>
 #endif
+using namespace std;
+
 
 /** @class Expressio
     @brief Conté les operacions de lectura i de avaluació de l'expressió en un mòdul funcional.
@@ -43,4 +45,4 @@ private:
 
 
 };
-#endif
+#endif //_EXPRESSIO_HH
