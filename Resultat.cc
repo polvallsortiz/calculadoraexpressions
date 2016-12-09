@@ -32,9 +32,7 @@ void Resultat::afegir_descripcio(string desc) {
 }
 
 void Resultat::esborrar_enter_llista() {
-    list<int>::iterator it = llistaenters.begin();
-    llistaenters.erase(it);
-    llistaenters.pop_back();
+    llistaenters.pop_front();
 }
 
 int Resultat::consultar_top() {
