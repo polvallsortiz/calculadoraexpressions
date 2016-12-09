@@ -3,8 +3,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-using namespace std;
 #endif
+using namespace std;
+
 
 /** @brief Programa principal per a la pràctica <em><b>Calculadora d'expressions aritmètiques</b></em>.
 */

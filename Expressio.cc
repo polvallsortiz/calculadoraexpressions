@@ -4,8 +4,36 @@
 
 #include "Expressio.hh"
 
+void Expressio::inicialitzar(string comanda) {
+    list<string> llista;
+    llegir_expressio(comanda,llista);
+    Resultat res = evaluar(llista);
+    if(res.consultar_descripcio() == "bool") {
+        if(res.consultar_enter() == 1) {
+            cout << res.consultar_enter() << " " << "TRUE" << endl;
+        }
+        else {
+            cout << res.consultar_enter() << " " << "FALSE" << endl;
+        }
+    }
+    if(res.consultar_descripcio() == "enter") cout << res.consultar_enter() << " " << "ENTER" << endl;
+    if(res.consultar_descripcio() == "llista") {
+        list<int> listtemp;
+        listtemp = res.consultar_llista();
+        list<int>::iterator it = listtemp.begin();
+        cout << listtemp.size() << endl;
+        while(it != listtemp.end()) {
+            cout << *it << " ";
+            ++it;
+        }
+        cout << endl << "LLISTA" << endl;
+    }
+    if(res.consultar_descripcio() == "indefinit") {
+        cout << "******** INDEFINIT ********" << endl;
+    }
+}
 
-void llegir_expressio(string s, list<string>& llista_expressio){
+void Expressio::llegir_expressio(string s, list<string>& llista_expressio){
     if(s[0] == '(') {
         s.erase(0, 1);
         s.erase(s.size()-1);
@@ -26,7 +54,7 @@ void llegir_expressio(string s, list<string>& llista_expressio){
 }
 
 
-Resultat evaluar(list<string> llista_expressio) {
+Resultat Expressio::evaluar(list<string> llista_expressio) {
     list<string>::iterator it = llista_expressio.begin();
     string op = *it;
     Resultat tres;
@@ -65,7 +93,7 @@ Resultat evaluar(list<string> llista_expressio) {
         llegir_expressio(r,llistar);
         Resultat rres = evaluar(llistar);
         tres.afegir_llista(rres.consultar_llista());
-        tres.afegir_enter_llista(lres.consultar_enter());
+        tres.afegir_enter_llista_davanter(lres.consultar_enter());
         tres.afegir_descripcio("llista");
     }
     if(op == "head") {
@@ -281,30 +309,4 @@ Resultat evaluar(list<string> llista_expressio) {
     return tres;
 }
 
-void Expressio::inicialitzar(string comanda) {
-    list<string> llista;
-    llegir_expressio(comanda,llista);
-    Resultat res = evaluar(llista);
-    if(res.consultar_descripcio() == "bool") {
-        if(res.consultar_enter() == 1) {
-            cout << res.consultar_enter() << " " << "TRUE" << endl;
-        }
-        else {
-            cout << res.consultar_enter() << " " << "FALSE" << endl;
-        }
-    }
-    if(res.consultar_descripcio() == "enter") cout << res.consultar_enter() << " " << "ENTER" << endl;
-    if(res.consultar_descripcio() == "llista") {
-        list<int> listtemp;
-        listtemp = res.consultar_llista();
-        list<int>::iterator it = listtemp.begin();
-        while(it != listtemp.end()) {
-            cout << *it << " ";
-            ++it;
-        }
-        cout << endl << "LLISTA" << endl;
-    }
-    if(res.consultar_descripcio() == "indefinit") {
-        cout << "******** INDEFINIT ********" << endl;
-    }
-}
+

@@ -23,6 +23,7 @@ using namespace std;
 class Expressio
 {
 public:
+
     /** @brief Inicialització de la calculadora.
      \pre <em>Tenim una comanda vàlida al string comanda</em>
      \post Retorna el resultat pel canal estandard de sortida <em>cout</em>.

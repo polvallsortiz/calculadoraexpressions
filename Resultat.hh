@@ -12,6 +12,7 @@
 #ifndef NO_DIAGRAM
 #include <list>
 #include <string>
+#include <iostream>
 #endif
 using namespace std;
 
@@ -48,6 +49,12 @@ public:
          \post Modificat.
          */
     void afegir_enter_llista(int enter_llista);
+
+    /** @brief Modifica el valor llista del parametre implícit.
+         \pre <em>cert</em>
+         \post Modificat.
+         */
+    void afegir_enter_llista_davanter(int enter_llista);
 
     /** @brief Modifica la descripció del parametre implícit.
          \pre <em>cert</em>

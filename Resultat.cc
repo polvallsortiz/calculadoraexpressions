@@ -20,6 +20,10 @@ void Resultat::afegir_llista(list<int> llista_ints) {
 }
 
 void Resultat::afegir_enter_llista(int enter_llista) {
+    llistaenters.push_back(enter_llista);
+}
+
+void Resultat::afegir_enter_llista_davanter(int enter_llista) {
     llistaenters.push_front(enter_llista);
 }
 
@@ -28,7 +32,9 @@ void Resultat::afegir_descripcio(string desc) {
 }
 
 void Resultat::esborrar_enter_llista() {
-    llistaenters.pop_front();
+    list<int>::iterator it = llistaenters.begin();
+    llistaenters.erase(it);
+    llistaenters.pop_back();
 }
 
 int Resultat::consultar_top() {
