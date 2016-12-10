@@ -1,5 +1,6 @@
 #include "Expressio.hh"
-#ifndef NO_DIAGRAM 
+#include "Dades.hh"
+#ifndef NO_DIAGRAM
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -13,10 +14,11 @@ using namespace std;
 int main ()
 {
     string comanda;
+    Dades data;
     getline(cin,comanda);
     while(comanda != "****" ) {
         Expressio expr;
-        expr.inicialitzar(comanda);
+        expr.inicialitzar(comanda,data);
         getline(cin,comanda);
     }
 }

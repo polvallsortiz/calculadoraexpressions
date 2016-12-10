@@ -1,70 +1,81 @@
-/** @file Operacions.hh
-    @brief Especificació de la classe Operacions
+//
+// Created by Pol Valls Ortiz on 10/12/2016.
+//
+/** @file Dades.hh
+    @brief Especificació de la classe Dades
 */
 
-#ifndef _DADES_HH_
-#define _DADES_HH_
 
+#ifndef _DADES_HH
+#define _DADES_HH
+
+#include "Operacio.hh"
+#include "Resultat.hh"
 #ifndef NO_DIAGRAM
-#include <map>
 #include <string>
-#include <list>
+#include <iostream>
+#include <map>
 #endif
-
+using namespace std;
 
 /** @class Dades
-    @brief Guarda tots els valors de variables definides 
+    @brief Guarda tots els valors de variables definides per l'usuari.
 */
 class Dades
 {
 public:
 //Constructores
 
-    /** @brief Creadora per defecte. 
-
-      S'executa automaticament al declarar un conjunt d'operacions.
+    /** @brief Creadora per defecte.
       \pre <em>cert</em>
       \post Conjunt creat correctament al sistema.
-      */  
-     Dades();
-     
+      */
+    Dades();
+
 //Modificadores
 
-    /** @brief Afegeix una dada al sistema.
-     \pre <em>Dada i index són valors vàlids</em>
-     \post S'ha afegit un valor indexat al sistema.
+    /** @brief Afegir operació.
+      \pre <em>Numero de parametres i expressió correctes</em>
+      \post S'ha afegit l'operació al sistema de dades.
+      */
+    void afegir_op(string ref,string exp, list<string> param);
+
+    /** @brief Afegir dada.
+      \pre <em>Expressió correctament parentitzada</em>
+      \post S'ha afegit la dada al sistema de dades.
+      */
+    void afegir_dada(string ref, Resultat dada);
+
+//Consultores
+
+    /** @brief Retorna si existeix l'operació amb la referència.
+      \pre <em>cert</em>
+      \post Retorna <em>true</em> si existeix, <em>false</em> altrament.
+      */
+    bool existeix_op(string ref);
+
+    /** @brief Retorna si existeix la dada amb la referència.
+      \pre <em>cert</em>
+      \post Retorna <em>true</em> si existeix, <em>false</em> altrament.
+      */
+    bool existeix_dada(string ref);
+
+    /** @brief Retorna l'operació amb referència ref.
+     \pre <em>ref és una referència vàlida</em>
+     \post Retorna l'operació.
      */
-     void afegir_dada_entera(string index, int dada);
+    Operacio consultar_operacio(string ref);
 
-    /** @brief Afegeix una dada al sistema.
-    \pre <em>Dades i index són valors vàlids</em>
-    \post S'ha afegit un valor indexat al sistema.
-    */
-     void afegir_dada_llista(string index, list<int>& dades);
-    
-//Consultora
-     /** @brief Retorna si existeix dades amb aquesta etiqueta.
-      \pre <em>Disposem d'una etiqueta amb la qual fer la cerca</em>
-      \post S'ha fet la recerca en els maps
-      */
-    bool etiqueta_list_enters(string etiqueta);
-    
-    /** @brief Retorna el valor de la dada entera.
-      \pre <em>L'etiqueta existeix en el sistema i indexa un enter</em>
-      \post Retorna la dada
-      */
-    
-    int valor_enter(string etiqueta);
+    /** @brief Retorna la dada amb referència ref.
+     \pre <em>ref és una referència vàlida</em>
+     \post Retorna la dada.
+     */
+    Resultat consultar_dada(string ref);
 
-    /** @brief Retorna el valor de la dada en format llista.
-      \pre <em>L'etiqueta existeix en el sistema i indexa una llista d'enters</em>
-      \post Retorna la dada
-      */
-    list valor_llista(string etiqueta);
-    
 
 private:
-    map<string,int> valor_dades_definides;
-    map<string,list<int>> valor_llistes_definides;
+    map<string,Operacio> map_op;
+    map<string,Resultat> map_data;
+
 };
-#endif
+#endif //_DADES_HH

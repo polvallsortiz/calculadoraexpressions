@@ -1,21 +1,39 @@
+//
+// Created by Pol Valls Ortiz on 10/12/2016.
+//
+
 #include "Dades.hh"
 
-void Dades::afegir_dada_entera(string index, int dada) {
-    valor_dades_definides.emplace(index,dada);
-}
-
-void Dades::afegir_dada_llista(string index, list<int>& dades){
-    valor_dades_definides.emplace(index,dades);
-}
-
-bool Dades::etiqueta_list_enters(string etiqueta) {
+Dades::Dades() {
 
 }
 
-int Dades::valor_enter(string etiqueta) {
-    return valor_dades_definides[etiqueta];
+void Dades::afegir_op(string ref, string exp, list<string> param) {
+    Operacio op;
+    op.afegir_op(exp,param);
+    map_op[ref] = op;
 }
 
-list Dades::valor_llista(string etiqueta) {
-    return valor_llistes_definides[etiqueta];
+void Dades::afegir_dada(string ref, Resultat dada) {
+    map_data[ref] = dada;
+}
+
+bool Dades::existeix_op(string ref) {
+    map<string,Operacio>::iterator it = map_op.find(ref);
+    if(it == map_op.end()) return false;
+    else return true;
+}
+
+bool Dades::existeix_dada(string ref) {
+    map<string,Resultat>::iterator it = map_data.find(ref);
+    if(it == map_data.end()) return false;
+    else return true;
+}
+
+Operacio Dades::consultar_operacio(string ref) {
+    return map_op[ref];
+}
+
+Resultat Dades::consultar_dada(string ref) {
+    return map_data[ref];
 }

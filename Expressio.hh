@@ -5,9 +5,9 @@
 #ifndef _EXPRESSIO_HH_
 #define _EXPRESSIO_HH_
 
-#ifndef NO_DIAGRAM
-//#include "Dades.hh"
 #include "Resultat.hh"
+#include "Dades.hh"
+#ifndef NO_DIAGRAM
 #include <sstream>
 #include <string>
 #include <list>
@@ -24,14 +24,15 @@ class Expressio
 {
 public:
 
+
     /** @brief Inicialització de la calculadora.
      \pre <em>Tenim una comanda vàlida al string comanda</em>
      \post Retorna el resultat pel canal estandard de sortida <em>cout</em>.
      */
-    void inicialitzar(string comanda);
+    void inicialitzar(string comanda, Dades& dat);
+
 
 private:
-
     /** @brief Converteix un string en una expressió.
      \pre <em>Tenim una comanda al string s i una llista buida</em>
      \post L'expressió està formada a partir dels strings corresponents
@@ -42,7 +43,7 @@ private:
      \pre <em>Expressió a la llista</em>
      \post Retorna un booleà, un enter, una llista d'enters o un indefinit.
      */
-    Resultat evaluar(list<string> llista_expressio);
+    Resultat evaluar(list<string> llista_expressio, Dades& dat);
 
 
 };
