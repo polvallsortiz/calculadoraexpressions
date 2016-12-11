@@ -30,6 +30,31 @@ bool Dades::existeix_dada(string ref) {
     else return true;
 }
 
+string Dades::definir_operacio(string ref, list<int> param2) {
+    string resultat;
+    Operacio op = map_op[ref];
+    list<string> parametres = op.consultar_parametres();
+    //ITERADORS
+    list<string>::iterator itp = parametres.begin();
+    list<int>::iterator itpos = param2.begin();
+    istringstream iss(op.consultar_expressio());
+    while(itp != parametres.end()) {
+        string actual;
+        while(iss >> actual) {
+            if(actual == *itp) {
+                int afegir = *itpos;
+                string afegirstr = to_string(afegir);
+                resultat += " " + afegirstr;
+            }
+            else resultat += " " + actual;
+        }
+        iss.str(resultat);
+        ++itp;
+        ++itpos;
+    }
+    return resultat;
+}
+
 Operacio Dades::consultar_operacio(string ref) {
     return map_op[ref];
 }

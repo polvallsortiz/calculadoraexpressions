@@ -12,6 +12,7 @@
 #include "Operacio.hh"
 #include "Resultat.hh"
 #ifndef NO_DIAGRAM
+#include <sstream>
 #include <string>
 #include <iostream>
 #include <map>
@@ -59,6 +60,12 @@ public:
       \post Retorna <em>true</em> si existeix, <em>false</em> altrament.
       */
     bool existeix_dada(string ref);
+
+    /** @brief Retorna l'operació amb referència ref amb parametres param2.
+     \pre <em>ref és una referència vàlida i param té la quantitat de parametres estipulats a la operació</em>
+     \post Retorna l'operació definida llesta per evaluar.
+     */
+    string definir_operacio(string ref, list<int> param2);
 
     /** @brief Retorna l'operació amb referència ref.
      \pre <em>ref és una referència vàlida</em>

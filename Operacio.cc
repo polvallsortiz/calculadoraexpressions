@@ -19,3 +19,7 @@ int Operacio::consultar_numero_parametres() {
 string Operacio::consultar_expressio() {
     return expressio;
 }
+
+list<string> Operacio::consultar_parametres() {
+    return parametres;
+}

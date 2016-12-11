@@ -48,6 +48,12 @@ public:
       */
     string consultar_expressio();
 
+    /** @brief Retorna el valor de l'expressió.
+      \pre <em>cert</em>
+      \post Retorna expressió.
+      */
+    list<string> consultar_parametres();
+
 private:
     list<string> parametres;
     string expressio;

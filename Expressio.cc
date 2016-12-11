@@ -67,12 +67,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             ++it;
             string r = *it;
             list <string> llistar;
             llegir_expressio(r, llistar);
-            Resultat rres = evaluar(llistar,dat);
+            Resultat rres = evaluar(llistar, dat);
             tres.afegir_enter_bool(lres.consultar_enter() + rres.consultar_enter());
             tres.afegir_descripcio("enter");
         }
@@ -81,7 +81,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             tres.afegir_enter_bool(-lres.consultar_enter());
             tres.afegir_descripcio("enter");
         }
@@ -90,12 +90,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             ++it;
             string r = *it;
             list <string> llistar;
             llegir_expressio(r, llistar);
-            Resultat rres = evaluar(llistar,dat);
+            Resultat rres = evaluar(llistar, dat);
             tres.afegir_llista(rres.consultar_llista());
             tres.afegir_enter_llista_davanter(lres.consultar_enter());
             tres.afegir_descripcio("llista");
@@ -105,7 +105,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             tres.afegir_enter_bool(lres.consultar_top());
             tres.afegir_descripcio("enter");
         }
@@ -114,7 +114,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             tres.afegir_llista(lres.consultar_llista());
             tres.esborrar_enter_llista();
             tres.afegir_descripcio("llista");
@@ -124,12 +124,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             ++it;
             string r = *it;
             list <string> llistar;
             llegir_expressio(r, llistar);
-            Resultat rres = evaluar(llistar,dat);
+            Resultat rres = evaluar(llistar, dat);
             if (lres.consultar_descripcio() == "enter" and rres.consultar_descripcio() == "enter") {
                 if (lres.consultar_enter() == rres.consultar_enter()) {
                     tres.afegir_enter_bool(1);
@@ -167,12 +167,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             ++it;
             string r = *it;
             list <string> llistar;
             llegir_expressio(r, llistar);
-            Resultat rres = evaluar(llistar,dat);
+            Resultat rres = evaluar(llistar, dat);
             if (lres.consultar_descripcio() == "enter" and rres.consultar_descripcio() == "enter") {
                 if (lres.consultar_enter() < rres.consultar_enter()) {
                     tres.afegir_enter_bool(1);
@@ -191,7 +191,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             if (lres.consultar_descripcio() == "bool") {
                 if (lres.consultar_enter() == 0) tres.afegir_enter_bool(1);
                 else tres.afegir_enter_bool(0);
@@ -203,12 +203,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             ++it;
             string r = *it;
             list <string> llistar;
             llegir_expressio(r, llistar);
-            Resultat rres = evaluar(llistar,dat);
+            Resultat rres = evaluar(llistar, dat);
             if (lres.consultar_descripcio() == "bool" and rres.consultar_descripcio() == "bool") {
                 if (lres.consultar_enter() == 1 and rres.consultar_enter() == 1) tres.afegir_enter_bool(1);
                 else tres.afegir_enter_bool(0);
@@ -220,12 +220,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string l = *it;
             list <string> llistal;
             llegir_expressio(l, llistal);
-            Resultat lres = evaluar(llistal,dat);
+            Resultat lres = evaluar(llistal, dat);
             ++it;
             string r = *it;
             list <string> llistar;
             llegir_expressio(r, llistar);
-            Resultat rres = evaluar(llistar,dat);
+            Resultat rres = evaluar(llistar, dat);
             if (lres.consultar_descripcio() == "bool" and rres.consultar_descripcio() == "bool") {
                 if (lres.consultar_enter() == 1 or rres.consultar_enter() == 1) tres.afegir_enter_bool(1);
                 else tres.afegir_enter_bool(0);
@@ -237,17 +237,17 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             string x = *it;
             list <string> llistax;
             llegir_expressio(x, llistax);
-            Resultat xres = evaluar(llistax,dat);
+            Resultat xres = evaluar(llistax, dat);
             ++it;
             string y = *it;
             list <string> llistay;
             llegir_expressio(y, llistay);
-            Resultat yres = evaluar(llistay,dat);
+            Resultat yres = evaluar(llistay, dat);
             ++it;
             string z = *it;
             list <string> llistaz;
             llegir_expressio(z, llistaz);
-            Resultat zres = evaluar(llistaz,dat);
+            Resultat zres = evaluar(llistaz, dat);
             if (xres.consultar_descripcio() == "bool") {
                 if (xres.consultar_enter() == 0) {
                     if (yres.consultar_descripcio() == "llista") {
@@ -276,62 +276,88 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                         tres.afegir_enter_bool(zres.consultar_enter());
                     }
                 }
-            }
-            else tres.afegir_descripcio("indefinit");
+            } else tres.afegir_descripcio("indefinit");
         }
-        if(op == "define") {
+        if (op == "define") {
             ++it;
             string ref = *it;
             ++it;
-            if(it == (--llista_expressio.end())) { //DEFINE DE ENTER/LLISTA ENTERS
+            if (it == (--llista_expressio.end())) { //DEFINE DE ENTER/LLISTA ENTERS
                 string ent = *it;
-                list<string> llistaent;
-                llegir_expressio(ent,llistaent);
-                tres = evaluar(llistaent,dat);
-                dat.afegir_dada(ref,tres);
+                list <string> llistaent;
+                llegir_expressio(ent, llistaent);
+                tres = evaluar(llistaent, dat);
+                dat.afegir_dada(ref, tres);
                 cout << ref << " ";
-                if(tres.consultar_descripcio() == "enter") cout << tres.consultar_enter() << endl;
-                if(tres.consultar_descripcio() == "llista") {
+                if (tres.consultar_descripcio() == "enter") cout << tres.consultar_enter() << endl;
+                if (tres.consultar_descripcio() == "llista") {
                     cout << "(";
-                    list <int> templist = tres.consultar_llista();
+                    list<int> templist = tres.consultar_llista();
                     list<int>::iterator itlist = templist.begin();
-                    while(itlist != templist.end()) {
+                    while (itlist != templist.end()) {
                         cout << *itlist << " ";
                         ++itlist;
                     }
                     cout << ")" << endl;
                 }
                 tres.afegir_descripcio("no");
-            }
-            else { //DEFINE DE OPERACIÓ
+            } else { //DEFINE DE OPERACIÓ
                 string param = *it;
-                list<string> llistaparam;
-                llegir_expressio(param,llistaparam);
+                list <string> llistaparam;
+                llegir_expressio(param, llistaparam);
                 int numparam = llistaparam.size();
                 ++it;
                 string exp = *it;
-                dat.afegir_op(ref,exp,llistaparam);
+                dat.afegir_op(ref, exp, llistaparam);
                 tres.afegir_descripcio(ref);
                 tres.afegir_enter_bool(numparam);
             }
         }
     }
-    else {
-        if(llista_expressio.size() == 1) { //ENTER/LLETRA SOLA
-            istringstream enter(*it);
-            int entertemp;
-            enter >> entertemp;
-            tres.afegir_enter_bool(entertemp);
-            //BOOL OR ENTER HOW WE KNOW IT ISSUE#5 GitHub
-            tres.afegir_descripcio("enter");
+    else { //O OP DEFINIDA, DADA DEFINIDA, ENTER SOL, LLISTA D'ENTERS
+        if(op < "0" or op > "9") { //DADA DEFINIDA OP
+            if(dat.existeix_op(op)) { //EXISTEIX OP A DADES
+                Operacio operacio = dat.consultar_operacio(op);
+                list<int> parametres;
+                int numparametres = operacio.consultar_numero_parametres();
+                while(numparametres != 0) {
+                    ++it;
+                    list<string> llistal;
+                    llegir_expressio(*it,llistal);
+                    Resultat lres = evaluar(llistal,dat);
+                    if(lres.consultar_descripcio() == "enter") parametres.push_back(lres.consultar_enter());
+                    --numparametres;
+                }
+                string post = dat.definir_operacio(op,parametres);
+                list<string> llistapost;
+                llegir_expressio(post,llistapost);
+                tres = evaluar(llistapost,dat);
+            }
+            if(dat.existeix_dada(op)) {
+                tres = dat.consultar_dada(op);
+            }
+            else cerr << "NO EXISTEIX FALTA IMPLEMENTACIÓ" << endl;
         }
-        else { //LLISTA D'ENTERS O LLETRES
-            while(it != llista_expressio.end()) {
+        else {
+            if (llista_expressio.size() == 1) { //ENTER/LLETRA SOLA
+                cerr << "entra aqui" << endl;
                 istringstream enter(*it);
-                int temp;
-                enter >> temp;
-                tres.afegir_enter_llista(temp);
-                ++it;
+                int entertemp;
+                enter >> entertemp;
+                tres.afegir_enter_bool(entertemp);
+                //BOOL OR ENTER HOW WE KNOW IT ISSUE#5 GitHub
+                tres.afegir_descripcio("enter");
+            }
+            else { //LLISTA D'ENTERS O LLETRES
+                cerr << "entra aqui 2" << endl;
+                while (it != llista_expressio.end()) {
+                    istringstream enter(*it);
+                    int temp;
+                    enter >> temp;
+                    tres.afegir_enter_llista(temp);
+                    ++it;
+                }
+                tres.afegir_descripcio("llista");
             }
         }
     }
