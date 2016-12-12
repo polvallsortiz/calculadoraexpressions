@@ -240,17 +240,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             llegir_expressio(x, llistax);
             Resultat xres = evaluar(llistax, dat);
             ++it;
-            string y = *it;
-            list <string> llistay;
-            llegir_expressio(y, llistay);
-            Resultat yres = evaluar(llistay, dat);
-            ++it;
-            string z = *it;
-            list <string> llistaz;
-            llegir_expressio(z, llistaz);
-            Resultat zres = evaluar(llistaz, dat);
-            if (xres.es_boolea()) {
-                if (xres.consultar_enter() == 0) {
+            if(xres.es_boolea()) {
+                if (xres.consultar_enter() == 1) {
+                    string y = *it;
+                    list<string> llistay;
+                    llegir_expressio(y, llistay);
+                    Resultat yres = evaluar(llistay, dat);
                     if (yres.consultar_descripcio() == "llista") {
                         tres.afegir_descripcio("llista");
                         tres.afegir_llista(yres.consultar_llista());
@@ -259,8 +254,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                         tres.afegir_descripcio("enter");
                         tres.afegir_enter_bool(yres.consultar_enter());
                     }
-                }
-                else {
+                } else {
+                    ++it;
+                    string z = *it;
+                    list<string> llistaz;
+                    llegir_expressio(z, llistaz);
+                    Resultat zres = evaluar(llistaz, dat);
                     if (zres.consultar_descripcio() == "llista") {
                         tres.afegir_descripcio("llista");
                         tres.afegir_llista(zres.consultar_llista());
