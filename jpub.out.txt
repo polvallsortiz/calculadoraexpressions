@@ -1,0 +1,81 @@
+0
+-1
+666
+-90127
+()
+(3)
+(-25)
+(23 4)
+(-12 -71)
+(0 -10 11)
+(1 -1 1 -1 1 -1 1)
+25
+10
+indefinit
+indefinit
+5
+indefinit
+(3 2 1)
+l1 (20 30)
+20
+indefinit
+1
+5
+indefinit
+x 10
+z 12
+13
+()
+diff #2
+-10
+* #2
+20
+* #2
+20
+-20
+-20
+20
+quadrat #1
+25
+/ #2
+5
+sum-first #1
+55
+mitjana #1
+5
+<= #2
+>= #2
+== #2
+> #2
+0
+1
+1
+indefinit
+(22 -10 2)
+(1 -3 -1 99)
+indefinit
+abc 22
+xyz 220
+4840
+abc 123
+27060
+fun #1
+indefinit
+Variables:
+abc 123
+l1 (20 30)
+x 10
+xyz 220
+z 12
+Operacions:
+* #2
+/ #2
+<= #2
+== #2
+> #2
+>= #2
+diff #2
+fun #1
+mitjana #1
+quadrat #1
+sum-first #1

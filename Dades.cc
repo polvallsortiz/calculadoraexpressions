@@ -37,21 +37,28 @@ string Dades::definir_operacio(string ref, list<int> param2) {
     //ITERADORS
     list<string>::iterator itp = parametres.begin();
     list<int>::iterator itpos = param2.begin();
-    istringstream iss(op.consultar_expressio());
+    resultat = op.consultar_expressio();
     while(itp != parametres.end()) {
         string actual;
+        istringstream iss(resultat);
+        resultat = "";
         while(iss >> actual) {
+            string parentesis = "";
+            while(actual[(actual.length()-1)] == ')') {
+                actual.erase(actual.length()-1);
+                parentesis += ")";
+            }
             if(actual == *itp) {
                 int afegir = *itpos;
                 string afegirstr = to_string(afegir);
-                resultat += " " + afegirstr;
+                resultat += " " + afegirstr + parentesis;
             }
-            else resultat += " " + actual;
+            else resultat += " " + actual + parentesis;
         }
-        iss.str(resultat);
         ++itp;
         ++itpos;
     }
+    resultat.erase(0,1);
     return resultat;
 }
 

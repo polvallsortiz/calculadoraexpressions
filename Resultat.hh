@@ -94,7 +94,11 @@ public:
          */
     string consultar_descripcio();
 
-
+    /** @brief Retorna si el valor és booleà.
+         \pre <em>cert</em>
+         \post Retorna <em>true</em> si el valor ho és, <em>false</em> altrament.
+         */
+    bool es_boolea();
 
 
 private:

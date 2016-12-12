@@ -51,3 +51,8 @@ string Resultat::consultar_descripcio() {
     return descripcio;
 }
 
+bool Resultat::es_boolea() {
+    if(descripcio == "enter" and (enterbool == 0 or enterbool == 1)) return true;
+    else return false;
+}
+
