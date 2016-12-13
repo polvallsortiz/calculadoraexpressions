@@ -8,7 +8,15 @@ Operacio::Operacio() {
 }
 
 void Operacio::afegir_op(string exp, list<string> param) {
-    parametres = param;
+    if(param.size() == 1) {
+        string parame = *param.begin();
+        parame.erase(0,1);
+        parame.erase(parame.length()-1);
+        list<string> temp;
+        temp.push_back(parame);
+        parametres = temp;
+    }
+    else parametres = param;
     expressio = exp;
 }
 

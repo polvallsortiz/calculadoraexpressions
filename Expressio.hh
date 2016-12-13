@@ -37,7 +37,7 @@ private:
      \pre <em>Tenim una comanda al string s i una llista buida</em>
      \post L'expressió està formada a partir dels strings corresponents
      */
-    void llegir_expressio(string s, list<string>& llista_expressio);
+    string llegir_expressio(string s, list<string>& llista_expressio);
 
     /** @brief Retorna el resultat.
      \pre <em>Expressió a la llista</em>
