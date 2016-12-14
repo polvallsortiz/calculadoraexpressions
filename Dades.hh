@@ -88,10 +88,13 @@ public:
      */
     bool es_correcte(string ref, string s, list<string> param);
 
+    bool es_predefinida(string s);
+
 
 private:
     map<string,Operacio> map_op;
     map<string,Resultat> map_data;
+    list<string> op_pref;
 
 };
 #endif //_DADES_HH

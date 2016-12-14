@@ -53,7 +53,17 @@ Dades::Dades() {
     map_op["and"];
     map_op["or"];
     map_op["if"];
-
+    op_pref.push_back("+");
+    op_pref.push_back("-");
+    op_pref.push_back("cons");
+    op_pref.push_back("head");
+    op_pref.push_back("tail");
+    op_pref.push_back("=");
+    op_pref.push_back("<");
+    op_pref.push_back("not");
+    op_pref.push_back("and");
+    op_pref.push_back("or");
+    op_pref.push_back("if");
 }
 
 void Dades::afegir_op(string ref, string exp, list<string> param) {
@@ -148,4 +158,15 @@ void Dades::finalitzar() {
         Operacio op = itops->second;
         cout << op.consultar_numero_parametres() << endl;
     }
+}
+
+
+bool Dades::es_predefinida(string s) {
+    list<string>::iterator it = op_pref.begin();
+    bool trobat = false;
+    while (it != op_pref.end) {
+        if (*it == s) return true;
+        ++it;
+    }
+    return false;
 }
