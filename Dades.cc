@@ -121,8 +121,8 @@ Resultat Dades::consultar_dada(string ref) {
 
 void Dades::finalitzar() {
     cout << "Variables:" << endl;
-    map<string,Resultat>::iterator itdades;
-    for(itdades = map_data.begin(); itdades != map_data.end(); ++itdades) {
+    map<string,Resultat>::iterator itdades = map_data.begin();
+    while(itdades != map_data.end()) {
         cout << itdades->first << " ";
         Resultat res = itdades->second;
         if(res.consultar_descripcio() == "llistabuida") cout << "()" << endl;
@@ -134,10 +134,12 @@ void Dades::finalitzar() {
             ++itllista;
             while(itllista != llista.end()) {
                 cout << " " << *itllista;
+                ++itllista;
             }
             cout << ")" << endl;
         }
         if(res.consultar_descripcio() == "enter") cout << res.consultar_enter() << endl;
+        ++itdades;
     }
     cout << "Operacions:" << endl;
     map<string,Operacio>::iterator itops;
