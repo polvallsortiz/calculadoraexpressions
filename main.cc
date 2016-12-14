@@ -1,9 +1,12 @@
 #include "Expressio.hh"
 #include "Dades.hh"
+#include "Operacio.hh"
+#include "Resultat.hh"
 #ifndef NO_DIAGRAM
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <map>
 #endif
 using namespace std;
 
@@ -43,4 +46,5 @@ int main ()
         }
         comanda = obtenir_expressio();
     }
+    data.finalitzar();
 }

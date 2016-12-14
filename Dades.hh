@@ -79,6 +79,15 @@ public:
      */
     Resultat consultar_dada(string ref);
 
+    void finalitzar();
+
+
+    /** @brief Retorna la dada amb referència ref.
+     \pre <em>ref és una referència vàlida</em>
+     \post Retorna la dada.
+     */
+    bool es_correcte(string ref, string s, list<string> param);
+
 
 private:
     map<string,Operacio> map_op;

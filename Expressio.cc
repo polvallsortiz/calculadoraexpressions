@@ -80,7 +80,7 @@ void Expressio::inicialitzar(string comanda,Dades& dat) {
                     cout << " " << *iti;
                     ++iti;
                 }
-                cout << ")";
+                cout << ")" << endl;
             }
         }
         if(condicio == "llistaints") {
@@ -133,14 +133,19 @@ string Expressio::llegir_expressio(string s, list<string>& llista_expressio){
         aretornar = "simple";
     }
     else {
+        bool par = false;
         if(s[0] == '(') {
+            par = true;
             s.erase(0,1);
             while(s[s.length()-1] != ')') {
                 s.erase(s.length()-1);
             }
             s.erase(s.length()-1);
         }
-        if(s[0] >= '0' and s[0] <= '9') aretornar = "llistaints";
+        if(s[0] >= '0' and s[0] <= '9') {
+            if(par) aretornar = "llistaperevaluar";
+            else aretornar = "llistaints";
+        }
         else {
             if(s[0] == '(') aretornar = "llistaperevaluar";
             else aretornar = "opnormal";
@@ -460,21 +465,27 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
     else { //O OP DEFINIDA, DADA DEFINIDA, ENTER SOL, LLISTA D'ENTERS (BUIDA O NO)
         if (dat.existeix_op(op)) { //EXISTEIX OP A DADES
             Operacio operacio = dat.consultar_operacio(op);
-            list<int> parametres;
-            int numparametres = operacio.consultar_numero_parametres();
-            while (numparametres != 0) {
-                ++it;
-                list <string> llistal;
-                llegir_expressio(*it, llistal);
-                Resultat lres = evaluar(llistal, dat);
-                if (lres.consultar_descripcio() == "enter") parametres.push_back(lres.consultar_enter());
-                --numparametres;
+            if(operacio.consultar_validesa()) {
+                list<int> parametres;
+                int numparametres = operacio.consultar_numero_parametres();
+                bool indefinida = false;
+                while (numparametres != 0 and not indefinida) {
+                    ++it;
+                    list<string> llistal;
+                    llegir_expressio(*it, llistal);
+                    Resultat lres = evaluar(llistal, dat);
+                    if (lres.consultar_descripcio() == "enter") parametres.push_back(lres.consultar_enter());
+                    else indefinida = true;
+                    --numparametres;
+                }
+                if (not indefinida) {
+                    string post = dat.definir_operacio(op, parametres);
+                    list<string> llistapost;
+                    llegir_expressio(post, llistapost);
+                    tres = evaluar(llistapost, dat);
+                }
             }
-            string post = dat.definir_operacio(op, parametres);
-            list <string> llistapost;
-            llegir_expressio(post, llistapost);
-            tres = evaluar(llistapost, dat);
-            tres.afegir_descripcio("enter");
+            else tres.afegir_descripcio("indefinit");
         }
         else {
             bool negatiu = false;
@@ -482,8 +493,23 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                 op.erase(0,1);
                 negatiu = true;
             }
-            if(op[0] < '0' or op[0] > '9') {
+            if((op[0] < '0' or op[0] > '9') and op != "()") {
                 if (dat.existeix_dada(op)) tres = dat.consultar_dada(op); //A DADES DEFINIDES
+                if(op[0] == '(' and op[op.length()-1] == ')') { //RETORNA LLISTA '(' ... ')'
+                    op.erase(0,1);
+                    op.erase(op.length()-1);
+                    list<string> llistar;
+                    llegir_expressio(op,llistar);
+                    Resultat rres = evaluar(llistar,dat);
+                    if(rres.consultar_descripcio() == "llista") {
+                        tres.afegir_llista(rres.consultar_llista());
+                        tres.afegir_descripcio("llista");
+                    }
+                    if (rres.consultar_descripcio() == "enter") {
+                        tres.afegir_enter_llista_davanter(rres.consultar_enter());
+                        tres.afegir_descripcio("llista");
+                    }
+                }
             }
             else { //ALTRAMENT
                 if(negatiu) op = "-" + op;

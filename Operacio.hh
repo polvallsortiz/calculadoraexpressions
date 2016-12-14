@@ -32,7 +32,7 @@ public:
      \pre <em>Numero de parametres i expressió correctes</em>
      \post S'ha afegit els camps de l'operació al sistema.
      */
-     void afegir_op(string exp, list<string> param);
+     void afegir_op(string exp, list<string> param, bool correctesa);
     
 //Consultores
 
@@ -48,6 +48,8 @@ public:
       */
     string consultar_expressio();
 
+    bool consultar_validesa();
+
     /** @brief Retorna el valor de l'expressió.
       \pre <em>cert</em>
       \post Retorna expressió.
@@ -57,5 +59,6 @@ public:
 private:
     list<string> parametres;
     string expressio;
+    bool evaluable;
 };
 #endif

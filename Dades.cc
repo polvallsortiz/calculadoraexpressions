@@ -4,13 +4,62 @@
 
 #include "Dades.hh"
 
+bool Dades::es_correcte(string ref, string s, list<string> param) {
+    istringstream iss(s);
+    if(param.size() == 1) {
+        list<string>::iterator itparametres = param.begin();
+        string anormalitzar = *itparametres;
+        anormalitzar.erase(0,1);
+        anormalitzar.erase(anormalitzar.length()-1);
+        param.push_back(anormalitzar);
+        param.pop_front();
+    }
+    string act;
+    bool resultat = true;
+    while(iss >> act and resultat) {
+        while (act[0] == '(') act.erase(0, 1);
+        while (act[act.length() - 1] == ')') act.erase(act.length() - 1);
+        bool negatiu = false;
+        if(act.length() != 0) {
+            if (act[0] == '-' and act.length() != 1) {
+                act.erase(0, 1);
+            }
+            if ((act < "0" or act > "9") and act != ref) {
+                map<string, Operacio>::iterator itops = map_op.find(act);
+                list<string>::iterator itparam = param.begin();
+                if (itops == map_op.end()) {
+                    bool trobat = false;
+                    while (not trobat and itparam != param.end()) {
+                        if(*itparam == act) trobat = true;
+                        else ++itparam;
+                    }
+                    if (itparam == param.end()) resultat = false;
+                }
+            }
+        }
+    }
+    return resultat;
+}
+
 Dades::Dades() {
+    map_op["+"];
+    map_op["-"];
+    map_op["cons"];
+    map_op["head"];
+    map_op["tail"];
+    map_op["="];
+    map_op["<"];
+    map_op["not"];
+    map_op["and"];
+    map_op["or"];
+    map_op["if"];
 
 }
 
 void Dades::afegir_op(string ref, string exp, list<string> param) {
     Operacio op;
-    op.afegir_op(exp,param);
+    bool correct = es_correcte(ref,exp,param);
+    op.afegir_op(exp,param,correct);
     map_op[ref] = op;
 }
 
@@ -68,4 +117,33 @@ Operacio Dades::consultar_operacio(string ref) {
 
 Resultat Dades::consultar_dada(string ref) {
     return map_data[ref];
+}
+
+void Dades::finalitzar() {
+    cout << "Variables:" << endl;
+    map<string,Resultat>::iterator itdades;
+    for(itdades = map_data.begin(); itdades != map_data.end(); ++itdades) {
+        cout << itdades->first << " ";
+        Resultat res = itdades->second;
+        if(res.consultar_descripcio() == "llistabuida") cout << "()" << endl;
+        if(res.consultar_descripcio() == "llista") {
+            list<int> llista = res.consultar_llista();
+            cout << "(";
+            list<int>::iterator itllista = llista.begin();
+            cout << *itllista;
+            ++itllista;
+            while(itllista != llista.end()) {
+                cout << " " << *itllista;
+            }
+            cout << ")" << endl;
+        }
+        if(res.consultar_descripcio() == "enter") cout << res.consultar_enter() << endl;
+    }
+    cout << "Operacions:" << endl;
+    map<string,Operacio>::iterator itops;
+    for(itops = map_op.begin(); itops != map_op.end(); ++itops) {
+        cout << itops->first << " #";
+        Operacio op = itops->second;
+        cout << op.consultar_numero_parametres() << endl;
+    }
 }
