@@ -7,6 +7,7 @@
 
 #include "Resultat.hh"
 #include "Dades.hh"
+#include "Operacio.hh"
 #ifndef NO_DIAGRAM
 #include <sstream>
 #include <string>
@@ -23,6 +24,8 @@ using namespace std;
 class Expressio
 {
 public:
+
+    Expressio();
 
 
     /** @brief Inicialització de la calculadora.

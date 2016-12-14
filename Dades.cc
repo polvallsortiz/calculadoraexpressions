@@ -19,7 +19,6 @@ bool Dades::es_correcte(string ref, string s, list<string> param) {
     while(iss >> act and resultat) {
         while (act[0] == '(') act.erase(0, 1);
         while (act[act.length() - 1] == ')') act.erase(act.length() - 1);
-        bool negatiu = false;
         if(act.length() != 0) {
             if (act[0] == '-' and act.length() != 1) {
                 act.erase(0, 1);
@@ -154,17 +153,18 @@ void Dades::finalitzar() {
     cout << "Operacions:" << endl;
     map<string,Operacio>::iterator itops;
     for(itops = map_op.begin(); itops != map_op.end(); ++itops) {
-        cout << itops->first << " #";
-        Operacio op = itops->second;
-        cout << op.consultar_numero_parametres() << endl;
+        if(not es_predefinida(itops->first)) {
+            cout << itops->first << " #";
+            Operacio op = itops->second;
+            cout << op.consultar_numero_parametres() << endl;
+        }
     }
 }
 
 
 bool Dades::es_predefinida(string s) {
     list<string>::iterator it = op_pref.begin();
-    bool trobat = false;
-    while (it != op_pref.end) {
+    while (it != op_pref.end()) {
         if (*it == s) return true;
         ++it;
     }

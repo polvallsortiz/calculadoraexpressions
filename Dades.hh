@@ -12,6 +12,7 @@
 #include "Operacio.hh"
 #include "Resultat.hh"
 #ifndef NO_DIAGRAM
+#include <list>
 #include <sstream>
 #include <string>
 #include <iostream>

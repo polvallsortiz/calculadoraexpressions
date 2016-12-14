@@ -27,6 +27,10 @@ int num_paraules(string s){
     return resultat;
 }
 
+Expressio::Expressio() {
+
+}
+
 void Expressio::inicialitzar(string comanda,Dades& dat) {
     list<string> llista;
     string condicio = llegir_expressio(comanda,llista);
