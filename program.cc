@@ -16,20 +16,20 @@ using namespace std;
 
 string obtenir_expressio() {
     int counter = 0;
+    bool first = true;
     string resultat,total;
-    getline(cin,resultat);
-    for(int i = 0; i < resultat.length(); ++i) {
-        if(resultat[i] == '(') ++counter;
-        if(resultat[i] == ')') --counter;
-    }
-    total = resultat;
-    while(counter != 0) {
-        getline(cin,resultat);
-        for(int j = 0; j < resultat.length(); ++j) {
-            if(resultat[j] == '(') ++counter;
-            if(resultat[j] == ')') --counter;
+    while(counter != 0 or first) {
+        if(first) first = false;
+        cin >> resultat;
+        for(int i = 0; i < resultat.length(); ++i){
+            if(resultat[i] == '(') ++counter;
+            if(resultat[i] == ')') --counter;
         }
-        total += resultat;
+        if(total.length() != 0) {
+            if (total[total.length() - 1] == ')' and resultat == ")") total += resultat;
+            else total += " " + resultat;
+        }
+        else total = resultat;
     }
     return total;
 }

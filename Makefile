@@ -19,8 +19,8 @@ Dades.o:  Dades.cc Dades.hh
 program.o: program.cc
 	g++ -c program.cc $(OPCIONS)
 
-program.tar: *.cc *.hh Makefile
-	tar -cvf program.tar *hh *.cc Makefile
+practica.tar: *.cc *.hh Makefile
+	tar -cvf practica.tar *hh *.cc Makefile
 clean:
 	rm *.o
 	rm *.exe
