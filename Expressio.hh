@@ -13,6 +13,7 @@
 #include <string>
 #include <list>
 #include <iostream>
+#include <vector>
 #endif
 using namespace std;
 

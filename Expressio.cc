@@ -484,15 +484,16 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
     else { //O OP DEFINIDA, DADA DEFINIDA, ENTER SOL, LLISTA D'ENTERS (BUIDA O NO)
         if (dat.existeix_op(op)) { //EXISTEIX OP A DADES
             Operacio operacio = dat.consultar_operacio(op);
-            list<Resultat> llista_parametres;
             if(operacio.consultar_validesa()) {
                 int numparametres = operacio.consultar_numero_parametres();
                 bool indefinida = false;
+                vector<Resultat> vec_parametres;
                 while (numparametres != 0 and not indefinida) {
                     ++it;
                     list<string> llistal;
                     llegir_expressio(*it, llistal);
                     Resultat lres = evaluar(llistal,dat);
+                    vec_parametres.push_back(lres);
                     /*CODI EXCEPCIONAL
                     if(perafegir.consultar_descripcio() == "llista") {
                         Resultat excep;
@@ -513,11 +514,11 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     }
                      */
                     //CODI QUE HAURIA DE FUNCIONAR
-                    llista_parametres.push_back(lres);
+                    //llista_parametres.push_back(lres);
                     --numparametres;
                 }
                 if (not indefinida) {
-                    string post = dat.definir_operacio(op, llista_parametres);
+                    string post = dat.definir_operacio(op, vec_parametres);
                     list<string> llistapost;
                     llegir_expressio(post, llistapost);
                     tres = evaluar(llistapost, dat);
