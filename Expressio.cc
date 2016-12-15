@@ -292,12 +292,28 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                         tres.afegir_descripcio("enter");
                     }
                 } else {
-                    if (lres.consultar_descripcio() == "llista" and rres.consultar_descripcio() == "llista") {
-                        if (lres.consultar_llista() == rres.consultar_llista()) {
-                            tres.afegir_enter_bool(1);
-                            tres.afegir_descripcio("enter");
-                        } else {
+                    if (lres.consultar_descripcio() == "llista") {
+                        if(rres.consultar_descripcio() == "llista") {
+                            if (lres.consultar_llista() == rres.consultar_llista()) {
+                                tres.afegir_enter_bool(1);
+                                tres.afegir_descripcio("enter");
+                            } else {
+                                tres.afegir_enter_bool(0);
+                                tres.afegir_descripcio("enter");
+                            }
+                        }
+                        if(rres.consultar_descripcio() == "llistabuida") {
                             tres.afegir_enter_bool(0);
+                            tres.afegir_descripcio("enter");
+                        }
+                    }
+                    if(lres.consultar_descripcio() == "llistabuida") {
+                        if(rres.consultar_descripcio() == "llista") {
+                            tres.afegir_enter_bool(0);
+                            tres.afegir_descripcio("enter");
+                        }
+                        if(rres.consultar_descripcio() == "llistabuida") {
+                            tres.afegir_enter_bool(1);
                             tres.afegir_descripcio("enter");
                         }
                     }
@@ -325,12 +341,28 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                         tres.afegir_descripcio("enter");
                     }
                 }
-                if (lres.consultar_descripcio() == "llista" and rres.consultar_descripcio() == "llista") {
-                    if (lres.consultar_llista() < rres.consultar_llista()) {
-                        tres.afegir_enter_bool(1);
-                        tres.afegir_descripcio("enter");
-                    } else {
+                if (lres.consultar_descripcio() == "llista") {
+                    if(rres.consultar_descripcio() == "llista") {
+                        if (lres.consultar_llista() < rres.consultar_llista()) {
+                            tres.afegir_enter_bool(1);
+                            tres.afegir_descripcio("enter");
+                        } else {
+                            tres.afegir_enter_bool(0);
+                            tres.afegir_descripcio("enter");
+                        }
+                    }
+                    if(rres.consultar_descripcio() == "llistabuida") {
                         tres.afegir_enter_bool(0);
+                        tres.afegir_descripcio("enter");
+                    }
+                }
+                if(lres.consultar_descripcio() == "llistabuida") {
+                    if(rres.consultar_descripcio() == "llistabuida") {
+                        tres.afegir_enter_bool(0);
+                        tres.afegir_descripcio("enter");
+                    }
+                    if(rres.consultar_descripcio() == "llista") {
+                        tres.afegir_enter_bool(1);
                         tres.afegir_descripcio("enter");
                     }
                 }
@@ -465,6 +497,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                         cout << ")" << endl;
                     }
                     if (tres.consultar_descripcio() == "llistabuida") cout << "()" << endl;
+                    if (tres.consultar_descripcio() == "indefinit") cout << "indefinit" << endl;
                     tres.afegir_descripcio("no");
                 } else { //DEFINE DE OPERACIÓ
                     string param = *it;
