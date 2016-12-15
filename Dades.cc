@@ -88,13 +88,13 @@ bool Dades::existeix_dada(string ref) {
     else return true;
 }
 
-string Dades::definir_operacio(string ref, list<int> param2) {
+string Dades::definir_operacio(string ref, list<Resultat> param2) {
     string resultat;
     Operacio op = map_op[ref];
     list<string> parametres = op.consultar_parametres();
     //ITERADORS
     list<string>::iterator itp = parametres.begin();
-    list<int>::iterator itpos = param2.begin();
+    list<Resultat>::iterator itpos = param2.begin();
     resultat = op.consultar_expressio();
     while(itp != parametres.end()) {
         string actual;
@@ -107,9 +107,24 @@ string Dades::definir_operacio(string ref, list<int> param2) {
                 parentesis += ")";
             }
             if(actual == *itp) {
-                int afegir = *itpos;
-                string afegirstr = to_string(afegir);
-                resultat += " " + afegirstr + parentesis;
+                Resultat resactual = *itpos;
+                if(resactual.consultar_descripcio() == "enter") {
+                    int afegir = resactual.consultar_enter();
+                    string afegirstr = to_string(afegir);
+                    resultat += " " + afegirstr + parentesis;
+                }
+                if(resactual.consultar_descripcio() == "llista") {
+                    list<int>::iterator itlist = resactual.consultar_llista().begin();
+                    int afegir = *itlist;
+                    string afegirstr = to_string(afegir);
+                    resultat = "(" + afegirstr;
+                    while(itlist != resactual.consultar_llista().end()) {
+                        afegir = *itlist;
+                        afegirstr = to_string(afegir);
+                        resultat += " " + afegirstr;
+                    }
+                    resultat += ")" + parentesis;
+                }
             }
             else resultat += " " + actual + parentesis;
         }

@@ -21,6 +21,8 @@ program.o: program.cc
 
 practica.tar: *.cc *.hh Makefile
 	tar -cvf practica.tar *hh *.cc Makefile
+
 clean:
 	rm *.o
 	rm *.exe
+	rm *.tar

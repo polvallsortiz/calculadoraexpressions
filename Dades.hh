@@ -66,7 +66,7 @@ public:
      \pre <em>ref és una referència vàlida i param té la quantitat de parametres estipulats a la operació</em>
      \post Retorna l'operació definida llesta per evaluar.
      */
-    string definir_operacio(string ref, list<int> param2);
+    string definir_operacio(string ref, list<Resultat> param2);
 
     /** @brief Retorna l'operació amb referència ref.
      \pre <em>ref és una referència vàlida</em>

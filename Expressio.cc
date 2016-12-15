@@ -470,7 +470,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
         if (dat.existeix_op(op)) { //EXISTEIX OP A DADES
             Operacio operacio = dat.consultar_operacio(op);
             if(operacio.consultar_validesa()) {
-                list<int> parametres;
+                list<Resultat> parametres;
                 int numparametres = operacio.consultar_numero_parametres();
                 bool indefinida = false;
                 while (numparametres != 0 and not indefinida) {
@@ -478,7 +478,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     list<string> llistal;
                     llegir_expressio(*it, llistal);
                     Resultat lres = evaluar(llistal, dat);
-                    if (lres.consultar_descripcio() == "enter") parametres.push_back(lres.consultar_enter());
+                    if(lres.consultar_descripcio() != "indefinit") parametres.push_back(lres);
                     else indefinida = true;
                     --numparametres;
                 }
