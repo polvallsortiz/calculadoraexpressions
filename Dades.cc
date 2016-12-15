@@ -117,11 +117,13 @@ string Dades::definir_operacio(string ref, list<Resultat> param2) {
                     list<int>::iterator itlist = resactual.consultar_llista().begin();
                     int afegir = *itlist;
                     string afegirstr = to_string(afegir);
-                    resultat = "(" + afegirstr;
+                    resultat += "(" + afegirstr;
+                    ++itlist;
                     while(itlist != resactual.consultar_llista().end()) {
                         afegir = *itlist;
                         afegirstr = to_string(afegir);
                         resultat += " " + afegirstr;
+                        ++itlist;
                     }
                     resultat += ")" + parentesis;
                 }

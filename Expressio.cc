@@ -324,13 +324,14 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     }
                 }
                 if (lres.consultar_descripcio() == "llista" and rres.consultar_descripcio() == "llista") {
-                                    if (lres.consultar_llistaenters() < rres.consultar_llistaenters()) {
-                                        tres.afegir_enter_bool(1);
-                                        tres.afegir_descripcio("enter");
-                                    } else {
-                                        tres.afegir_enter_bool(0);
-                                        tres.afegir_descripcio("enter");
-                                    }
+                    if (lres.consultar_llista() < rres.consultar_llista()) {
+                        tres.afegir_enter_bool(1);
+                        tres.afegir_descripcio("enter");
+                    } else {
+                        tres.afegir_enter_bool(0);
+                        tres.afegir_descripcio("enter");
+                    }
+                }
             }
         }
         if (op == "not") {
@@ -478,7 +479,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
         if (dat.existeix_op(op)) { //EXISTEIX OP A DADES
             Operacio operacio = dat.consultar_operacio(op);
             if(operacio.consultar_validesa()) {
-                list<Resultat> parametres;
+                list<Resultat> llista_parametres;
                 int numparametres = operacio.consultar_numero_parametres();
                 bool indefinida = false;
                 while (numparametres != 0 and not indefinida) {
@@ -486,12 +487,12 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     list<string> llistal;
                     llegir_expressio(*it, llistal);
                     Resultat lres = evaluar(llistal, dat);
-                    if(lres.consultar_descripcio() != "indefinit") parametres.push_back(lres);
+                    if(lres.consultar_descripcio() != "indefinit") llista_parametres.push_back(lres);
                     else indefinida = true;
                     --numparametres;
                 }
                 if (not indefinida) {
-                    string post = dat.definir_operacio(op, parametres);
+                    string post = dat.definir_operacio(op, llista_parametres);
                     list<string> llistapost;
                     llegir_expressio(post, llistapost);
                     tres = evaluar(llistapost, dat);
