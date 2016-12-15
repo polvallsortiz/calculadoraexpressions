@@ -322,8 +322,15 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                         tres.afegir_enter_bool(0);
                         tres.afegir_descripcio("enter");
                     }
-
                 }
+                if (lres.consultar_descripcio() == "llista" and rres.consultar_descripcio() == "llista") {
+                                    if (lres.consultar_llistaenters() < rres.consultar_llistaenters()) {
+                                        tres.afegir_enter_bool(1);
+                                        tres.afegir_descripcio("enter");
+                                    } else {
+                                        tres.afegir_enter_bool(0);
+                                        tres.afegir_descripcio("enter");
+                                    }
             }
         }
         if (op == "not") {
@@ -388,7 +395,8 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                 string x = *it;
                 list<string> llistax;
                 llegir_expressio(x, llistax);
-                Resultat xres = evaluar(llistax, dat);
+                Resultat
+                xres = evaluar(llistax, dat);
                 ++it;
                 if (xres.es_boolea()) {
                     if (xres.consultar_enter() == 1) {
