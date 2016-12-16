@@ -17,8 +17,8 @@ bool Dades::es_correcte(string ref, string s, list<string> param) {
     string act;
     bool resultat = true;
     while(iss >> act and resultat) {
-        while (act[0] == '(') act.erase(0, 1);
-        while (act[act.length() - 1] == ')') act.erase(act.length() - 1);
+        while(act[0] == '(') act.erase(0,1);
+        while(act.size() != 0 and act[act.length()-1] == ')') act.erase(act.length()-1);
         if(act.length() != 0) {
             if (act[0] == '-' and act.length() != 1) {
                 act.erase(0, 1);
