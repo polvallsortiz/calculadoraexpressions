@@ -128,6 +128,9 @@ string Dades::definir_operacio(string ref, vector<Resultat> param2) {
                     }
                     resultat += ")" + parentesis;
                 }
+                if(resactual.consultar_descripcio() == "llistabuida") {
+                    resultat += " ()" + parentesis;
+                }
             }
             else resultat += " " + actual + parentesis;
         }
