@@ -42,13 +42,16 @@ void Expressio::inicialitzar(string comanda,Dades& dat) {
             else { //LLISTA UN ELEMENT
                 act.erase(0,1);
                 act.erase(act.length()-1);
-                list<int> llistatemp;
-                istringstream buff(act);
-                int ent;
-                buff >> ent;
-                llistatemp.push_back(ent);
-                res.afegir_llista(llistatemp);
-                res.afegir_descripcio("llista");
+                if(act[0] == '(') res.afegir_descripcio("indefinit");
+                else {
+                    list<int> llistatemp;
+                    istringstream buff(act);
+                    int ent;
+                    buff >> ent;
+                    llistatemp.push_back(ent);
+                    res.afegir_llista(llistatemp);
+                    res.afegir_descripcio("llista");
+                }
             }
         }
         else {
@@ -613,10 +616,10 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     else {
                         list<int> llistatemp;
                         while(it != llista_expressio.end()) {
-                            istringstream buffer(*it);
-                            int temp;
-                            buffer >> temp;
-                            llistatemp.push_back(temp);
+                            list<string> lintres;
+                            llegir_expressio(*it,lintres);
+                            Resultat intres = evaluar(lintres,dat);
+                            llistatemp.push_back(intres.consultar_enter());
                             ++it;
                         }
                         tres.afegir_descripcio("llista");
