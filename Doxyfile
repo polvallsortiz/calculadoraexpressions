@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = utf-8
 PROJECT_NAME           = "Calculadora d'Expressions Aritmètiques'"
-PROJECT_NUMBER         = "versió 1 20-11-2016"
+PROJECT_NUMBER         = "Release num1 20/12/2016"
 OUTPUT_DIRECTORY       = "./Sortida"
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = Catalan
@@ -95,7 +95,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 INPUT                  = "."
 INPUT_ENCODING         = utf-8
-FILE_PATTERNS          = main.cc \ *.hh
+FILE_PATTERNS          = *.hh \ *.cc
 RECURSIVE              = NO
 EXCLUDE                = *~
 EXCLUDE_SYMLINKS       = NO
@@ -254,11 +254,3 @@ DOT_CLEANUP            = YES
 # Configuration::additions related to the search engine   
 #---------------------------------------------------------------------------
 SEARCHENGINE           = YES
-#---------------------------------------------------------------------------
-# Algunas palabras reservadas añadidas para PRO2  
-#---------------------------------------------------------------------------
-ALIASES += coste=" \par Coste\n" 
-# en html, no pone el borde verde de \pre o \post; para solucionarlo
-# hay que modificar el doxygen.css
-# en latex, queda con menos indentación que \pre o \post; para solucionarlo
-# hay que modificar el doxygen.sty

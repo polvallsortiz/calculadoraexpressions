@@ -40,22 +40,34 @@ void Expressio::inicialitzar(string comanda,Dades& dat) {
         if(comanda[0] == '(') { //LLISTA
             string act = *llista.begin();
             if(llista.size() == 1 and act[1] == ')') res.afegir_descripcio("llistabuida");
-            else { //LLISTA UN ELEMENT O LLISTA DEFINIDA
-                if(dat.existeix_dada(act)) {
-                    res = dat.consultar_dada(act);
-                }
-                else {
-                    act.erase(0, 1);
-                    act.erase(act.length() - 1);
-                    if (act[0] == '(') res.afegir_descripcio("indefinit");
-                    else {
-                        list<int> llistatemp;
-                        istringstream buff(act);
-                        int ent;
-                        buff >> ent;
-                        llistatemp.push_back(ent);
-                        res.afegir_llista(llistatemp);
-                        res.afegir_descripcio("llista");
+            else { //LLISTA UN ELEMENT O LLISTA DEFINIDA O OPERACIO SENSE PARAMETRES
+                act.erase(0, 1);
+                act.erase(act.length() - 1);
+                if (dat.existeix_op(act)) {
+                    Operacio actualop = dat.consultar_operacio(act);
+                    if(actualop.consultar_validesa()) {
+                        string perevaluar = actualop.consultar_expressio();
+                        list <string> llistaops;
+                        llegir_expressio(perevaluar, llistaops);
+                        res = evaluar(llistaops, dat);
+                    }
+                } else {
+                    act = "(" + act + ")";
+                    if (dat.existeix_dada(act)) {
+                        res = dat.consultar_dada(act);
+                    } else {
+                        act.erase(0, 1);
+                        act.erase(act.length() - 1);
+                        if (act[0] == '(') res.afegir_descripcio("indefinit");
+                        else {
+                            list<int> llistatemp;
+                            istringstream buff(act);
+                            int ent;
+                            buff >> ent;
+                            llistatemp.push_back(ent);
+                            res.afegir_llista(llistatemp);
+                            res.afegir_descripcio("llista");
+                        }
                     }
                 }
             }
@@ -197,7 +209,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
     list<string>::iterator it = llista_expressio.begin();
     string op = *it;
     Resultat tres;
-    if(op == "+" or op == "-" or op == "cons" or op == "head" or op == "tail" or op == "=" or op == "<" or op == "not" or op == "and" or op == "or" or op == "if" or op == "define") {
+    if(dat.es_predefinida(op)) {
         if (op == "+") {
             if(llista_expressio.size() == 3) {
                 ++it;
@@ -529,6 +541,8 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     string exp = *it;
                     dat.afegir_op(ref, exp, llistaparam);
                     tres.afegir_descripcio(ref);
+                    list<string>::iterator excepcio = llistaparam.begin();
+                    if(*excepcio == "()") numparam = 0;
                     tres.afegir_enter_bool(numparam);
                 }
             }
@@ -540,45 +554,46 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             Operacio operacio = dat.consultar_operacio(op);
             if(operacio.consultar_validesa()) {
                 int numparametres = operacio.consultar_numero_parametres();
-                bool indefinida = false;
-                vector<Resultat> vec_parametres;
-                while (numparametres != 0 and not indefinida) {
-                    ++it;
-                    list<string> llistal;
-                    llegir_expressio(*it, llistal);
-                    Resultat lres = evaluar(llistal,dat);
-                    vec_parametres.push_back(lres);
-                    /*CODI EXCEPCIONAL
-                    if(perafegir.consultar_descripcio() == "llista") {
-                        Resultat excep;
-                        excep.afegir_llista(perafegir.consultar_llista());
-                        excep.afegir_descripcio("llista");
-                        llista_parametres.push_back(excep);
+                if (llista_expressio.size() == (numparametres + 1)) {
+                    bool indefinida = false;
+                    vector<Resultat> vec_parametres;
+                    while (numparametres != 0 and not indefinida) {
+                        ++it;
+                        list <string> llistal;
+                        llegir_expressio(*it, llistal);
+                        Resultat lres = evaluar(llistal, dat);
+                        vec_parametres.push_back(lres);
+                        /*CODI EXCEPCIONAL
+                        if(perafegir.consultar_descripcio() == "llista") {
+                            Resultat excep;
+                            excep.afegir_llista(perafegir.consultar_llista());
+                            excep.afegir_descripcio("llista");
+                            llista_parametres.push_back(excep);
+                        }
+                        if(perafegir.consultar_descripcio() == "llistabuida") {
+                            Resultat excep;
+                            excep.afegir_descripcio("llistabuida");
+                            llista_parametres.push_back(excep);
+                        }
+                        if(perafegir.consultar_descripcio() == "enter") {
+                            Resultat excep;
+                            excep.afegir_enter_bool(perafegir.consultar_enter());
+                            excep.afegir_descripcio("enter");
+                            llista_parametres.push_back(excep);
+                        }
+                         */
+                        //CODI QUE HAURIA DE FUNCIONAR
+                        //llista_parametres.push_back(lres);
+                        --numparametres;
                     }
-                    if(perafegir.consultar_descripcio() == "llistabuida") {
-                        Resultat excep;
-                        excep.afegir_descripcio("llistabuida");
-                        llista_parametres.push_back(excep);
+                    if (not indefinida) {
+                        string post = dat.definir_operacio(op, vec_parametres);
+                        list <string> llistapost;
+                        llegir_expressio(post, llistapost);
+                        tres = evaluar(llistapost, dat);
                     }
-                    if(perafegir.consultar_descripcio() == "enter") {
-                        Resultat excep;
-                        excep.afegir_enter_bool(perafegir.consultar_enter());
-                        excep.afegir_descripcio("enter");
-                        llista_parametres.push_back(excep);
-                    }
-                     */
-                    //CODI QUE HAURIA DE FUNCIONAR
-                    //llista_parametres.push_back(lres);
-                    --numparametres;
-                }
-                if (not indefinida) {
-                    string post = dat.definir_operacio(op, vec_parametres);
-                    list<string> llistapost;
-                    llegir_expressio(post, llistapost);
-                    tres = evaluar(llistapost, dat);
                 }
             }
-            else tres.afegir_descripcio("indefinit");
         }
         else {
             bool negatiu = false;

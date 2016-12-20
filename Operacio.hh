@@ -12,7 +12,7 @@
 #endif
 using namespace std;
 
-/** @class Operacions
+/** @class Operacio
     @brief Emmagatzema els camps de les operacions definides pels usuaris.
 */
 class Operacio

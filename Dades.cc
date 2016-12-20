@@ -28,6 +28,7 @@ Dades::Dades() {
     op_pref.push_back("and");
     op_pref.push_back("or");
     op_pref.push_back("if");
+    op_pref.push_back("define");
 }
 
 void Dades::afegir_op(string ref, string exp, list<string> param) {
@@ -59,63 +60,67 @@ string Dades::definir_operacio(string ref, vector<Resultat> param2) {
     list<string> parametres = op.consultar_parametres();
     //ITERADORS
     list<string>::iterator itp = parametres.begin();
-    int itpos = 0;
-    resultat = op.consultar_expressio();
-    while(itp != parametres.end()) {
-        string actual;
-        istringstream iss(resultat);
-        resultat = "";
-        while(iss >> actual) {
-            //string antiparentesis = "";
-            string parentesis = "";
-            /* while(actual[0] == '(') {
-                actual.erase(0,1);
-                antiparentesis += "(";
-            }
-             */
-            while(actual[(actual.length()-1)] == ')') {
-                actual.erase(actual.length()-1);
-                parentesis += ")";
-            }
-            if(actual == *itp) {
-                Resultat resactual = param2[itpos];
-                if(resactual.consultar_descripcio() == "enter") {
-                    int afegir = resactual.consultar_enter();
-                    string afegirstr = to_string(afegir);
-                    resultat += " " + afegirstr + parentesis;
-                    //resultat += " " + antiparentesis + afegirstr + parentesis;
+    if(*itp != "()") {
+        int itpos = 0;
+        resultat = op.consultar_expressio();
+        while (itp != parametres.end()) {
+            string actual;
+            istringstream iss(resultat);
+            resultat = "";
+            while (iss >> actual) {
+                string antiparentesis = "";
+                string parentesis = "";
+                while (actual[0] == '(') {
+                    actual.erase(0, 1);
+                    antiparentesis += "(";
                 }
-                if(resactual.consultar_descripcio() == "llista") {
-                    list<int> temporalint = resactual.consultar_llista();
-                    list<int>::iterator itlist = temporalint.begin();
-                    int afegir = *itlist;
-                    string afegirstr = to_string(afegir);
-                    resultat += " (" + afegirstr;
-                    //resultat +=" " + antiparentesis + "(" + afegirstr;
-                    ++itlist;
-                    while(itlist != temporalint.end()) {
-                        afegir = *itlist;
-                        afegirstr = to_string(afegir);
-                        resultat += " " + afegirstr;
-                        ++itlist;
+                while (actual.size() != 0 and actual[(actual.length() - 1)] == ')') {
+                    actual.erase(actual.length() - 1);
+                    parentesis += ")";
+                }
+                if (actual == *itp) {
+                    Resultat resactual = param2[itpos];
+                    if (resactual.consultar_descripcio() == "enter") {
+                        int afegir = resactual.consultar_enter();
+                        string afegirstr = to_string(afegir);
+                        //resultat += " " + afegirstr + parentesis;
+                        resultat += " " + antiparentesis + afegirstr + parentesis;
                     }
-                    resultat += ")" + parentesis;
-                }
-                if(resactual.consultar_descripcio() == "llistabuida") {
-                    resultat += " ()" + parentesis;
-                    //resultat += antiparentesis + " ()" + parentesis;
+                    if (resactual.consultar_descripcio() == "llista") {
+                        list<int> temporalint = resactual.consultar_llista();
+                        list<int>::iterator itlist = temporalint.begin();
+                        int afegir = *itlist;
+                        string afegirstr = to_string(afegir);
+                        //resultat += " (" + afegirstr;
+                        resultat += " " + antiparentesis + "(" + afegirstr;
+                        ++itlist;
+                        while (itlist != temporalint.end()) {
+                            afegir = *itlist;
+                            afegirstr = to_string(afegir);
+                            resultat += " " + afegirstr;
+                            ++itlist;
+                        }
+                        resultat += ")" + parentesis;
+                    }
+                    if (resactual.consultar_descripcio() == "llistabuida") {
+                        //resultat += " ()" + parentesis;
+                        resultat += antiparentesis + " ()" + parentesis;
+                    }
+                } else {
+                    if (actual.size() == 0) resultat += " " + antiparentesis + parentesis;
+                        //resultat += " " + actual + parentesis;
+                    else resultat += " " + antiparentesis + actual + parentesis;
                 }
             }
-            else {
-                resultat += " " + actual + parentesis;
-                //resultat += " " + antiparentesis + actual + parentesis;
-            }
+            ++itp;
+            ++itpos;
         }
-        ++itp;
-        ++itpos;
+        resultat.erase(0, 1);
+        return resultat;
     }
-    resultat.erase(0,1);
-    return resultat;
+    else {
+        return op.consultar_expressio();
+    }
 }
 
 Operacio Dades::consultar_operacio(string ref) {
