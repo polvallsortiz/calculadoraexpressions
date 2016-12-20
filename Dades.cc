@@ -133,33 +133,45 @@ Resultat Dades::consultar_dada(string ref) {
 
 bool Dades::es_correcte(string ref, string s, list<string> param) {
     istringstream iss(s);
-    if(param.size() == 1) {
-        list<string>::iterator itparametres = param.begin();
-        string anormalitzar = *itparametres;
-        anormalitzar.erase(0,1);
-        anormalitzar.erase(anormalitzar.length()-1);
-        param.push_back(anormalitzar);
-        param.pop_front();
-    }
-    string act;
     bool resultat = true;
-    while(iss >> act and resultat) {
-        while(act[0] == '(') act.erase(0,1);
-        while(act.size() != 0 and act[act.length()-1] == ')') act.erase(act.length()-1);
-        if(act.length() != 0) {
-            if (act[0] == '-' and act.length() != 1) {
-                act.erase(0, 1);
+    if(param.size() == 0) {
+        string temporal;
+        while(iss >> temporal and resultat) {
+            if(temporal[0] == '-') temporal.erase(0,1);
+            while(temporal[0] == '(') temporal.erase(0,1);
+            if((temporal[0] < '0' or temporal[0] > '9') and (not es_predefinida(temporal))) {
+                resultat = false;
             }
-            if ((act < "0" or act > "9") and act != ref) {
-                map<string, Operacio>::iterator itops = map_op.find(act);
-                list<string>::iterator itparam = param.begin();
-                if (itops == map_op.end()) {
-                    bool trobat = false;
-                    while (not trobat and itparam != param.end()) {
-                        if(*itparam == act) trobat = true;
-                        else ++itparam;
+        }
+    }
+    else {
+        if (param.size() == 1) {
+            list<string>::iterator itparametres = param.begin();
+            string anormalitzar = *itparametres;
+            anormalitzar.erase(0, 1);
+            anormalitzar.erase(anormalitzar.length() - 1);
+            param.push_back(anormalitzar);
+            param.pop_front();
+        }
+        string act;
+        while (iss >> act and resultat) {
+            while (act[0] == '(') act.erase(0, 1);
+            while (act.size() != 0 and act[act.length() - 1] == ')') act.erase(act.length() - 1);
+            if (act.length() != 0) {
+                if (act[0] == '-' and act.length() != 1) {
+                    act.erase(0, 1);
+                }
+                if ((act < "0" or act > "9") and act != ref) {
+                    map<string, Operacio>::iterator itops = map_op.find(act);
+                    list<string>::iterator itparam = param.begin();
+                    if (itops == map_op.end()) {
+                        bool trobat = false;
+                        while (not trobat and itparam != param.end()) {
+                            if (*itparam == act) trobat = true;
+                            else ++itparam;
+                        }
+                        if (itparam == param.end()) resultat = false;
                     }
-                    if (itparam == param.end()) resultat = false;
                 }
             }
         }

@@ -45,7 +45,7 @@ void Expressio::inicialitzar(string comanda,Dades& dat) {
                 act.erase(act.length() - 1);
                 if (dat.existeix_op(act)) {
                     Operacio actualop = dat.consultar_operacio(act);
-                    if(actualop.consultar_validesa()) {
+                    if(actualop.consultar_validesa() and actualop.consultar_numero_parametres() == 0) {
                         string perevaluar = actualop.consultar_expressio();
                         list <string> llistaops;
                         llegir_expressio(perevaluar, llistaops);
@@ -514,7 +514,7 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     list<string> llistaent;
                     llegir_expressio(ent, llistaent);
                     tres = evaluar(llistaent, dat);
-                    dat.afegir_dada(ref, tres);
+                    if(tres.consultar_descripcio() != "indefinit") dat.afegir_dada(ref, tres);
                     cout << ref << " ";
                     if (tres.consultar_descripcio() == "enter") cout << tres.consultar_enter() << endl;
                     if (tres.consultar_descripcio() == "llista") {
@@ -534,15 +534,14 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
                     tres.afegir_descripcio("no");
                 } else { //DEFINE DE OPERACIÓ
                     string param = *it;
-                    list<string> llistaparam;
-                    llegir_expressio(param, llistaparam);
+                    list <string> llistaparam;
+                    if(param != "()") llegir_expressio(param, llistaparam);
                     int numparam = llistaparam.size();
                     ++it;
                     string exp = *it;
                     dat.afegir_op(ref, exp, llistaparam);
                     tres.afegir_descripcio(ref);
                     list<string>::iterator excepcio = llistaparam.begin();
-                    if(*excepcio == "()") numparam = 0;
                     tres.afegir_enter_bool(numparam);
                 }
             }
