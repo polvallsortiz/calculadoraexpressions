@@ -4,6 +4,7 @@
 
 #include "Expressio.hh"
 
+//FUNCIONS PRÒPIES
 bool llista(string s) {
     if(s[0] == '(' and s[s.length()-1] == ')')  return true;
     else return false;
@@ -39,27 +40,44 @@ void Expressio::inicialitzar(string comanda,Dades& dat) {
         if(comanda[0] == '(') { //LLISTA
             string act = *llista.begin();
             if(llista.size() == 1 and act[1] == ')') res.afegir_descripcio("llistabuida");
-            else { //LLISTA UN ELEMENT
-                act.erase(0,1);
-                act.erase(act.length()-1);
-                if(act[0] == '(') res.afegir_descripcio("indefinit");
+            else { //LLISTA UN ELEMENT O LLISTA DEFINIDA
+                if(dat.existeix_dada(act)) {
+                    res = dat.consultar_dada(act);
+                }
                 else {
-                    list<int> llistatemp;
-                    istringstream buff(act);
-                    int ent;
-                    buff >> ent;
-                    llistatemp.push_back(ent);
-                    res.afegir_llista(llistatemp);
-                    res.afegir_descripcio("llista");
+                    act.erase(0, 1);
+                    act.erase(act.length() - 1);
+                    if (act[0] == '(') res.afegir_descripcio("indefinit");
+                    else {
+                        list<int> llistatemp;
+                        istringstream buff(act);
+                        int ent;
+                        buff >> ent;
+                        llistatemp.push_back(ent);
+                        res.afegir_llista(llistatemp);
+                        res.afegir_descripcio("llista");
+                    }
                 }
             }
         }
-        else {
-            res.afegir_descripcio("enter");
-            istringstream iss(*llista.begin());
-            int temp;
-            iss >> temp;
-            res.afegir_enter_bool(temp);
+        else { //ENTER O DADA DEFINIDA DIRECTA
+            string actual = *llista.begin();
+            bool negatiu = false;
+            if(actual[0] == '-') {
+                negatiu = true;
+                actual.erase(0,1);
+            }
+            if(actual[0] < '0' or actual[0] > '9') {
+                if(dat.existeix_dada(actual)) res = dat.consultar_dada(actual);
+            }
+            else {
+                if(negatiu) actual = "-" + actual;
+                res.afegir_descripcio("enter");
+                istringstream iss(*llista.begin());
+                int temp;
+                iss >> temp;
+                res.afegir_enter_bool(temp);
+            }
         }
     }
     else{
@@ -570,19 +588,21 @@ Resultat Expressio::evaluar(list<string> llista_expressio, Dades& dat) {
             }
             if((op[0] < '0' or op[0] > '9') and op != "()") {
                 if (dat.existeix_dada(op)) tres = dat.consultar_dada(op); //A DADES DEFINIDES
-                if(op[0] == '(' and op[op.length()-1] == ')') { //RETORNA LLISTA '(' ... ')'
-                    op.erase(0,1);
-                    op.erase(op.length()-1);
-                    list<string> llistar;
-                    llegir_expressio(op,llistar);
-                    Resultat rres = evaluar(llistar,dat);
-                    if(rres.consultar_descripcio() == "llista") {
-                        tres.afegir_llista(rres.consultar_llista());
-                        tres.afegir_descripcio("llista");
-                    }
-                    if (rres.consultar_descripcio() == "enter") {
-                        tres.afegir_enter_llista_davanter(rres.consultar_enter());
-                        tres.afegir_descripcio("llista");
+                else {
+                    if (op[0] == '(' and op[op.length() - 1] == ')') { //RETORNA LLISTA '(' ... ')'
+                        op.erase(0, 1);
+                        op.erase(op.length() - 1);
+                        list<string> llistar;
+                        llegir_expressio(op, llistar);
+                        Resultat rres = evaluar(llistar, dat);
+                        if (rres.consultar_descripcio() == "llista") {
+                            tres.afegir_llista(rres.consultar_llista());
+                            tres.afegir_descripcio("llista");
+                        }
+                        if (rres.consultar_descripcio() == "enter") {
+                            tres.afegir_enter_llista_davanter(rres.consultar_enter());
+                            tres.afegir_descripcio("llista");
+                        }
                     }
                 }
             }

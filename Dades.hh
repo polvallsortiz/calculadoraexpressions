@@ -1,6 +1,3 @@
-//
-// Created by Pol Valls Ortiz on 10/12/2016.
-//
 /** @file Dades.hh
     @brief Especificació de la classe Dades
 */
@@ -81,16 +78,23 @@ public:
      */
     Resultat consultar_dada(string ref);
 
-    void finalitzar();
-
-
     /** @brief Retorna la dada amb referència ref.
-     \pre <em>ref és una referència vàlida</em>
-     \post Retorna la dada.
-     */
+    \pre <em>ref és una referència vàlida</em>
+    \post Retorna la dada.
+    */
     bool es_correcte(string ref, string s, list<string> param);
 
+    /** @brief Retorna si una operació és predefinida.
+   \pre <em>s és una referència vàlida</em>
+   \post Retorna <em>true</em> si ho és, <em>false</em> altrament.
+   */
     bool es_predefinida(string s);
+
+    /** @brief Funció per a finalitzar la calculadora.
+     \pre La comanda executada és <em>****</em>
+     \post Retorna totes les dades i operacions.
+     */
+    void finalitzar();
 
 
 private:

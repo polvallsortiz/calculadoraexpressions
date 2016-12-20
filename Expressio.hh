@@ -26,6 +26,10 @@ class Expressio
 {
 public:
 
+    /** @brief Creadora per defecte.
+      \pre <em>cert</em>
+      \post Conjunt creat correctament al sistema.
+      */
     Expressio();
 
 
@@ -35,8 +39,6 @@ public:
      */
     void inicialitzar(string comanda, Dades& dat);
 
-
-private:
     /** @brief Converteix un string en una expressió.
      \pre <em>Tenim una comanda al string s i una llista buida</em>
      \post L'expressió està formada a partir dels strings corresponents
@@ -49,6 +51,7 @@ private:
      */
     Resultat evaluar(list<string> llista_expressio, Dades& dat);
 
+private:
 
 };
 #endif //_EXPRESSIO_HH

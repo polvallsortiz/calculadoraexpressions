@@ -1,6 +1,3 @@
-//
-// Created by Pol Valls Ortiz on 08/12/2016.
-//
 /** @file Resultat.cc
     @brief Implementacó de la classe Resultat de <em>Calculadora d'expressions</em>.
 */

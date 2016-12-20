@@ -1,3 +1,7 @@
+/** @file program.cc
+    @brief Programa principal de <em>Calculadora d'expressions aritmètiques</em>.
+*/
+
 #include "Expressio.hh"
 #include "Dades.hh"
 #include "Operacio.hh"
@@ -9,10 +13,6 @@
 #include <map>
 #endif
 using namespace std;
-
-
-/** @brief Programa principal per a la pràctica <em><b>Calculadora d'expressions aritmètiques</b></em>.
-*/
 
 string obtenir_expressio() {
     int counter = 0;

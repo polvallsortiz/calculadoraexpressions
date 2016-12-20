@@ -1,6 +1,3 @@
-//
-// Created by Pol Valls Ortiz on 08/12/2016.
-//
 /** @file Resultat.hh
     @brief Especificació de la classe Resultat
 */
@@ -57,7 +54,7 @@ public:
     void afegir_enter_llista_davanter(int enter_llista);
 
     /** @brief Modifica la descripció del parametre implícit.
-         \pre <em>cert</em>
+         \pre <em>Descripció Possible</em>
          \post Modificat.
          */
     void afegir_descripcio(string desc);

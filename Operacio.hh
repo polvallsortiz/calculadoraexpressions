@@ -21,11 +21,11 @@ public:
 //Constructores
 
     /** @brief Creadora per defecte.
-      \pre <em>cert</em>
+      \pre <em>Número de parametres i expressió correctes</em>
       \post Conjunt creat correctament al sistema.
       */  
      Operacio();
-     
+
 //Modificadores
 
     /** @brief Afegir operació.
@@ -33,7 +33,7 @@ public:
      \post S'ha afegit els camps de l'operació al sistema.
      */
      void afegir_op(string exp, list<string> param, bool correctesa);
-    
+
 //Consultores
 
      /** @brief Retorna el numero de parametres de l'operació.
@@ -48,11 +48,15 @@ public:
       */
     string consultar_expressio();
 
+    /** @brief Retorna si l'operació està correctament definida.
+      \pre <em>cert</em>
+      \post Retorna <em>true</em> si ho és, <em>false</em> altrament.
+      */
     bool consultar_validesa();
 
-    /** @brief Retorna el valor de l'expressió.
+    /** @brief Retorna els índexs dels parametres.
       \pre <em>cert</em>
-      \post Retorna expressió.
+      \post Retorna la llista.
       */
     list<string> consultar_parametres();
 

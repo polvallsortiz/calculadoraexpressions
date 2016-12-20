@@ -1,44 +1,9 @@
-//
-// Created by Pol Valls Ortiz on 10/12/2016.
-//
+/** @file Dades.cc
+    @brief Implementació de la classe Dades
+*/
+
 
 #include "Dades.hh"
-
-bool Dades::es_correcte(string ref, string s, list<string> param) {
-    istringstream iss(s);
-    if(param.size() == 1) {
-        list<string>::iterator itparametres = param.begin();
-        string anormalitzar = *itparametres;
-        anormalitzar.erase(0,1);
-        anormalitzar.erase(anormalitzar.length()-1);
-        param.push_back(anormalitzar);
-        param.pop_front();
-    }
-    string act;
-    bool resultat = true;
-    while(iss >> act and resultat) {
-        while(act[0] == '(') act.erase(0,1);
-        while(act.size() != 0 and act[act.length()-1] == ')') act.erase(act.length()-1);
-        if(act.length() != 0) {
-            if (act[0] == '-' and act.length() != 1) {
-                act.erase(0, 1);
-            }
-            if ((act < "0" or act > "9") and act != ref) {
-                map<string, Operacio>::iterator itops = map_op.find(act);
-                list<string>::iterator itparam = param.begin();
-                if (itops == map_op.end()) {
-                    bool trobat = false;
-                    while (not trobat and itparam != param.end()) {
-                        if(*itparam == act) trobat = true;
-                        else ++itparam;
-                    }
-                    if (itparam == param.end()) resultat = false;
-                }
-            }
-        }
-    }
-    return resultat;
-}
 
 Dades::Dades() {
     map_op["+"];
@@ -101,7 +66,13 @@ string Dades::definir_operacio(string ref, vector<Resultat> param2) {
         istringstream iss(resultat);
         resultat = "";
         while(iss >> actual) {
+            //string antiparentesis = "";
             string parentesis = "";
+            /* while(actual[0] == '(') {
+                actual.erase(0,1);
+                antiparentesis += "(";
+            }
+             */
             while(actual[(actual.length()-1)] == ')') {
                 actual.erase(actual.length()-1);
                 parentesis += ")";
@@ -112,6 +83,7 @@ string Dades::definir_operacio(string ref, vector<Resultat> param2) {
                     int afegir = resactual.consultar_enter();
                     string afegirstr = to_string(afegir);
                     resultat += " " + afegirstr + parentesis;
+                    //resultat += " " + antiparentesis + afegirstr + parentesis;
                 }
                 if(resactual.consultar_descripcio() == "llista") {
                     list<int> temporalint = resactual.consultar_llista();
@@ -119,6 +91,7 @@ string Dades::definir_operacio(string ref, vector<Resultat> param2) {
                     int afegir = *itlist;
                     string afegirstr = to_string(afegir);
                     resultat += " (" + afegirstr;
+                    //resultat +=" " + antiparentesis + "(" + afegirstr;
                     ++itlist;
                     while(itlist != temporalint.end()) {
                         afegir = *itlist;
@@ -130,9 +103,13 @@ string Dades::definir_operacio(string ref, vector<Resultat> param2) {
                 }
                 if(resactual.consultar_descripcio() == "llistabuida") {
                     resultat += " ()" + parentesis;
+                    //resultat += antiparentesis + " ()" + parentesis;
                 }
             }
-            else resultat += " " + actual + parentesis;
+            else {
+                resultat += " " + actual + parentesis;
+                //resultat += " " + antiparentesis + actual + parentesis;
+            }
         }
         ++itp;
         ++itpos;
@@ -147,6 +124,51 @@ Operacio Dades::consultar_operacio(string ref) {
 
 Resultat Dades::consultar_dada(string ref) {
     return map_data[ref];
+}
+
+bool Dades::es_correcte(string ref, string s, list<string> param) {
+    istringstream iss(s);
+    if(param.size() == 1) {
+        list<string>::iterator itparametres = param.begin();
+        string anormalitzar = *itparametres;
+        anormalitzar.erase(0,1);
+        anormalitzar.erase(anormalitzar.length()-1);
+        param.push_back(anormalitzar);
+        param.pop_front();
+    }
+    string act;
+    bool resultat = true;
+    while(iss >> act and resultat) {
+        while(act[0] == '(') act.erase(0,1);
+        while(act.size() != 0 and act[act.length()-1] == ')') act.erase(act.length()-1);
+        if(act.length() != 0) {
+            if (act[0] == '-' and act.length() != 1) {
+                act.erase(0, 1);
+            }
+            if ((act < "0" or act > "9") and act != ref) {
+                map<string, Operacio>::iterator itops = map_op.find(act);
+                list<string>::iterator itparam = param.begin();
+                if (itops == map_op.end()) {
+                    bool trobat = false;
+                    while (not trobat and itparam != param.end()) {
+                        if(*itparam == act) trobat = true;
+                        else ++itparam;
+                    }
+                    if (itparam == param.end()) resultat = false;
+                }
+            }
+        }
+    }
+    return resultat;
+}
+
+bool Dades::es_predefinida(string s) {
+    list<string>::iterator it = op_pref.begin();
+    while (it != op_pref.end()) {
+        if (*it == s) return true;
+        ++it;
+    }
+    return false;
 }
 
 void Dades::finalitzar() {
@@ -180,14 +202,4 @@ void Dades::finalitzar() {
             cout << op.consultar_numero_parametres() << endl;
         }
     }
-}
-
-
-bool Dades::es_predefinida(string s) {
-    list<string>::iterator it = op_pref.begin();
-    while (it != op_pref.end()) {
-        if (*it == s) return true;
-        ++it;
-    }
-    return false;
 }
